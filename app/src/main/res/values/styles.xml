@@ -1,0 +1,38 @@
+<resources>
+
+  <!-- Base application theme. -->
+  <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!-- Customize your theme here. -->
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimary</item>
+    <item name="colorAccent">@color/colorAccent</item>
+
+    <!-- color of bottom line of editText -->
+    <item name="colorControlNormal">@color/gray</item>
+
+    <item name="android:listDivider">@color/transparent</item>
+
+    <!-- Color of option menu text -->
+    <item name="actionMenuTextColor">@color/white</item>
+
+    <!-- App Font -->
+    <item name="fontFamily">@font/helvetica_neue_light</item>
+  </style>
+
+  <style name="AppTheme.NoActionBar">
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+  </style>
+
+  <style name="TextBoldFont">
+    <item name="android:textSize">@dimen/text_size16</item>
+    <item name="android:textStyle">bold</item>
+    <item name="fontFamily">@font/helvetica_neue_bold</item>
+  </style>
+
+  <style name="TextMediumFont">
+    <item name="android:textSize">@dimen/text_size14</item>
+    <item name="fontFamily">@font/helvetica_neue_medium</item>
+  </style>
+
+</resources>

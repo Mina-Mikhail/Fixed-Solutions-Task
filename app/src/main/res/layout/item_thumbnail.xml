@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fl_container"
+    android:layout_width="@dimen/dimen50"
+    android:layout_height="@dimen/dimen50"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/dimen2"
+    >
+
+  <com.makeramen.roundedimageview.RoundedImageView
+      android:id="@+id/iv_image"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_margin="@dimen/dimen1"
+      android:scaleType="centerCrop"
+      app:riv_corner_radius="2dp"
+      app:riv_mutate_background="true"
+      app:riv_tile_mode="clamp"
+      />
+
+  <ImageView
+      android:id="@+id/iv_overlay"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_margin="@dimen/dimen1"
+      android:background="@drawable/bg_dark_round"
+      android:scaleType="centerCrop"
+      tools:ignore="ContentDescription"
+      />
+
+  <com.github.ybq.android.spinkit.SpinKitView
+      android:id="@+id/loading"
+      style="@style/SpinKitView.Large.Wave"
+      android:layout_width="@dimen/dimen36"
+      android:layout_height="@dimen/dimen36"
+      android:layout_gravity="center"
+      app:SpinKit_Color="@color/colorAccent"
+      />
+
+</FrameLayout>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/popularMoviesFragment">
+
+  <fragment
+      android:id="@+id/popularMoviesFragment"
+      android:name="com.mina_mikhail.fixed_solutions_task.ui.popular_movies.PopularMoviesFragment"
+      android:label="PopularMoviesFragment">
+    <action
+        android:id="@+id/action_next"
+        app:destination="@id/detailsFragment" />
+  </fragment>
+  <fragment
+      android:id="@+id/detailsFragment"
+      android:name="com.mina_mikhail.fixed_solutions_task.ui.movie_details.MovieDetailsFragment"
+      android:label="Details">
+    <argument
+        android:name="movie_id"
+        app:argType="integer"
+        android:defaultValue="0" />
+  </fragment>
+</navigation>

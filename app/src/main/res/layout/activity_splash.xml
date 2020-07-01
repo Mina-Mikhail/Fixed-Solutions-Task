@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+  <data>
+    <variable
+        name="viewModel"
+        type="com.mina_mikhail.fixed_solutions_task.ui.splash.SplashViewModel"
+        />
+  </data>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/white"
+      android:gravity="center"
+      android:orientation="vertical"
+      android:padding="@dimen/activity_padding"
+      >
+
+    <ImageView
+        android:layout_width="@dimen/dimen200"
+        android:layout_height="@dimen/dimen200"
+        app:srcCompat="@drawable/bg_welcome"
+        tools:ignore="ContentDescription"
+        />
+
+    <TextView
+        style="@style/TextBoldFont"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen16"
+        android:gravity="center"
+        android:text="@string/splash_title"
+        android:textColor="@color/darkGray"
+        />
+
+    <Button
+        style="@style/TextBoldFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen16"
+        android:background="@drawable/btn_accent"
+        android:onClick="@{()-> viewModel.onStartClicked()}"
+        android:paddingStart="@dimen/dimen36"
+        android:paddingEnd="@dimen/dimen36"
+        android:text="@string/start_tour"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        />
+
+  </LinearLayout>
+
+</layout>

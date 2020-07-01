@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <data>
+    <variable
+        name="viewModel"
+        type="com.mina_mikhail.fixed_solutions_task.ui.gallery_slider.GallerySliderViewModel"
+        />
+  </data>
+
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/black"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+      <LinearLayout
+          android:id="@+id/ll_slider"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="vertical"
+          android:visibility="gone"
+          >
+
+        <com.mina_mikhail.fixed_solutions_task.ui.gallery_slider.widgets.SliderPager
+            android:id="@+id/sp_slider"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/black"
+            />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_thumbnails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="5dp"
+            android:scrollbars="none"
+            />
+
+      </LinearLayout>
+
+      <TextView
+          android:id="@+id/tv_no_images"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          android:text="@string/no_image"
+          android:textColor="@color/white"
+          android:textSize="18sp"
+          android:visibility="gone"
+          />
+
+    </LinearLayout>
+
+    <include
+        android:id="@+id/included_toolbar"
+        layout="@layout/toolbar_transparent"
+        />
+
+  </FrameLayout>
+
+</layout>

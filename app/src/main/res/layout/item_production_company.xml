@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+  <data>
+    <variable
+        name="item"
+        type="com.mina_mikhail.fixed_solutions_task.data.model.ProductionCompany"
+        />
+  </data>
+
+  <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/dimen5"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      >
+
+    <TextView
+        style="@style/TextBoldFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen2"
+        android:layout_marginEnd="@dimen/dimen5"
+        android:text="@{item.name}"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size14"
+        tools:text="Fast and Furious"
+        />
+
+    <View
+        android:layout_width="1dp"
+        android:id="@+id/divider"
+        android:visibility="gone"
+        android:layout_marginStart="@dimen/dimen5"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        />
+
+  </LinearLayout>
+
+</layout>

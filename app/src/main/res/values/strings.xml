@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <string name="app_name">Fixed Solutions Task</string>
+
+  <!-- General Strings -->
+  <string name="try_again">Something went wrong, please try again later</string>
+  <string name="no_internet">No internet connection please try again later</string>
+  <string name="some_error">Some error occurred</string>
+  <string name="reload">Reload</string>
+  <string name="hide">Hide</string>
+  <string name="no_image">No Image</string>
+  <string name="list_no_result">Sorry, There are no result here!</string>
+  <string name="success_remote_load">Get movies from remote successfully</string>
+  <string name="success_local_load">Get movies from local room successfully</string>
+  <string name="success_remote_load_details">Get movie details from remote successfully</string>
+  <string name="success_local_load_details">Get movie details from local room successfully</string>
+
+  <!-- Splash -->
+  <string name="splash_title">Feel Free to explore our movies</string>
+  <string name="start_tour">Start Your Tour Now!</string>
+
+  <!-- Movies -->
+  <string name="popular_movies">Popular Movies</string>
+  <string name="language">Language</string>
+  <string name="adults_only">Adults Only</string>
+
+  <!-- Movie Details -->
+  <string name="overview">Overview</string>
+  <string name="release_date">Release Date</string>
+  <string name="spoken_languages">Spoken Languages</string>
+  <string name="production_countries">Production Countries</string>
+  <string name="production_companies">Production Companies</string>
+  <string name="movie_budget">Movie Budget</string>
+  <string name="status">Status</string>
+
+</resources>
