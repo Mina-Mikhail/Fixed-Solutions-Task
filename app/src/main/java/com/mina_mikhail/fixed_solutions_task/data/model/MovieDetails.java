@@ -1,5 +1,6 @@
 package com.mina_mikhail.fixed_solutions_task.data.model;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
@@ -30,25 +31,56 @@ public class MovieDetails {
    */
 
   @PrimaryKey
+  @ColumnInfo(name = "movie_id")
   private int id;
+
+  @ColumnInfo(name = "movie_for_adult")
   private boolean adult;
+
+  @ColumnInfo(name = "movie_backdrop_path")
   private String backdrop_path;
+
+  @ColumnInfo(name = "movie_status")
   private String status;
+
+  @ColumnInfo(name = "movie_budget")
   private double budget;
+
+  @ColumnInfo(name = "movie_original_language")
   private String original_language;
+
+  @ColumnInfo(name = "movie_overview")
   private String overview;
+
+  @ColumnInfo(name = "movie_poster_path")
   private String poster_path;
+
+  @ColumnInfo(name = "movie_release_date")
   private String release_date;
+
+  @ColumnInfo(name = "movie_title")
   private String title;
+
+  @ColumnInfo(name = "movie_vote_average")
   private float vote_average;
+
+  @ColumnInfo(name = "movie_vote_count")
   private int vote_count;
+
   @TypeConverters(Converters.class)
+  @ColumnInfo(name = "movie_genres")
   private List<Genre> genres;
+
   @TypeConverters(Converters.class)
+  @ColumnInfo(name = "movie_production_companies")
   private List<ProductionCompany> production_companies;
+
   @TypeConverters(Converters.class)
+  @ColumnInfo(name = "movie_production_countries")
   private List<ProductionCountry> production_countries;
+
   @TypeConverters(Converters.class)
+  @ColumnInfo(name = "movie_spoken_languages")
   private List<SpokenLanguage> spoken_languages;
 
   public boolean isAdult() {
@@ -80,7 +112,11 @@ public class MovieDetails {
   }
 
   public String getBudgetFormatted() {
-    return CommonUtils.convertToSuffix((long) budget);
+    if (budget != 0) {
+      return CommonUtils.convertToSuffix((long) budget);
+    } else {
+      return "";
+    }
   }
 
   public void setBudget(double budget) {

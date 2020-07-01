@@ -10,7 +10,8 @@ import retrofit2.http.Query;
 public interface ApiInterface {
 
   @GET("discover/movie")
-  Single<PopularMoviesResponse> getMovies(@Query("sort_by") String sortBy);
+  Single<PopularMoviesResponse> getMovies(@Query("sort_by") String sortBy,
+      @Query("page") int pageNumber);
 
   @GET("movie/{movieID}")
   Single<MovieDetails> getMovieDetails(@Path("movieID") int movieID);

@@ -1,5 +1,6 @@
 package com.mina_mikhail.fixed_solutions_task.data.model;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import com.mina_mikhail.fixed_solutions_task.utils.Constants;
@@ -18,15 +19,32 @@ public class Movie {
    * release_date : 2019-09-17
    */
 
-  @PrimaryKey(autoGenerate = true)
+  @PrimaryKey(autoGenerate = true) // To avoid ordering issue when retrieve movies
+  @ColumnInfo(name = "room_id")
   private int local_id;
+
+  @ColumnInfo(name = "movie_id")
   private int id;
+
+  @ColumnInfo(name = "movie_vote_count")
   private int vote_count;
+
+  @ColumnInfo(name = "movie_poster_path")
   private String poster_path;
+
+  @ColumnInfo(name = "movie_original_language")
   private String original_language;
+
+  @ColumnInfo(name = "movie_for_adult")
   private boolean adult;
+
+  @ColumnInfo(name = "movie_title")
   private String title;
+
+  @ColumnInfo(name = "movie_vote_average")
   private float vote_average;
+
+  @ColumnInfo(name = "movie_release_date")
   private String release_date;
 
   public int getLocal_id() {

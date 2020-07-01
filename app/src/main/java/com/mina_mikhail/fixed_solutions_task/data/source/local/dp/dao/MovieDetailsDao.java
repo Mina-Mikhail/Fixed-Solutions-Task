@@ -10,7 +10,7 @@ import com.mina_mikhail.fixed_solutions_task.data.model.MovieDetails;
 @Dao
 public interface MovieDetailsDao {
 
-  @Query("SELECT * FROM movies_details where id = :movieID")
+  @Query("SELECT * FROM movies_details where movie_id = :movieID")
   LiveData<MovieDetails> getMovie(int movieID);
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)

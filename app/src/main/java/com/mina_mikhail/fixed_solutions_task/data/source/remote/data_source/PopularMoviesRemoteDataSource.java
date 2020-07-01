@@ -27,9 +27,9 @@ public class PopularMoviesRemoteDataSource {
     disposable = new CompositeDisposable();
   }
 
-  public RemoteDataSource<List<Movie>> getMovies(String sortBy) {
+  public RemoteDataSource<List<Movie>> getMovies(String sortBy, int pageNumber) {
     data.setIsLoading();
-    disposable.add(ApiClient.getInstance().getApiService().getMovies(sortBy)
+    disposable.add(ApiClient.getInstance().getApiService().getMovies(sortBy, pageNumber)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .as(autoDisposable(ScopeProvider.UNBOUND))

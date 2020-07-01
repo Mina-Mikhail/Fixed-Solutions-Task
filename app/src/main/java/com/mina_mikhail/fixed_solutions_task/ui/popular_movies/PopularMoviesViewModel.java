@@ -23,8 +23,8 @@ public class PopularMoviesViewModel
     movies = new RemoteDataSource<>();
   }
 
-  void getMovies(String sortBy) {
-    movies = repository.getMovies(sortBy);
+  void getMovies(String sortBy, int pageNumber) {
+    movies = repository.getMovies(sortBy, pageNumber);
   }
 
   RemoteDataSource<List<Movie>> getMoviesData() {

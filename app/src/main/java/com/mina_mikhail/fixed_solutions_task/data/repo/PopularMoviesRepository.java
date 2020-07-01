@@ -19,9 +19,9 @@ public class PopularMoviesRepository {
     this.localDataSource = localDataSource;
   }
 
-  public RemoteDataSource<List<Movie>> getMovies(String sortBy) {
+  public RemoteDataSource<List<Movie>> getMovies(String sortBy, int pageNumber) {
     if (NetworkUtils.isNetworkConnected(MyApplication.getInstance())) {
-      return remoteDataSource.getMovies(sortBy);
+      return remoteDataSource.getMovies(sortBy, pageNumber);
     } else {
       return localDataSource.getMovies();
     }

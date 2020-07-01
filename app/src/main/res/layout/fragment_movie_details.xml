@@ -114,136 +114,171 @@
                 android:paddingBottom="@dimen/dimen14"
                 >
 
-              <TextView
-                  style="@style/TextBoldFont"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:text="@string/overview"
-                  android:textColor="@color/colorAccent"
-                  android:textSize="@dimen/text_size14"
-                  />
-
-              <View
-                  style="@style/TextBoldFont"
-                  android:layout_width="match_parent"
-                  android:layout_height="0.5dp"
-                  android:layout_marginTop="@dimen/dimen2"
-                  android:layout_marginBottom="@dimen/dimen5"
-                  android:alpha="0.5"
-                  android:background="@color/gray"
-                  />
-
-              <TextView
-                  style="@style/TextMediumFont"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:layout_marginBottom="@dimen/dimen10"
-                  android:alpha="0.6"
-                  android:text="@{movie.overview}"
-                  android:textColor="@color/darkGray"
-                  android:textSize="@dimen/text_size12"
-                  tools:text="Movie extra details"
-                  />
-
-              <TextView
-                  style="@style/TextBoldFont"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:text="@string/status"
-                  android:textColor="@color/colorAccent"
-                  android:textSize="@dimen/text_size14"
-                  />
-
-              <View
-                  style="@style/TextBoldFont"
-                  android:layout_width="match_parent"
-                  android:layout_height="0.5dp"
-                  android:layout_marginTop="@dimen/dimen2"
-                  android:layout_marginBottom="@dimen/dimen5"
-                  android:alpha="0.5"
-                  android:background="@color/gray"
-                  />
-
-              <TextView
-                  style="@style/TextMediumFont"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:layout_marginBottom="@dimen/dimen10"
-                  android:alpha="0.6"
-                  android:text="@{movie.status}"
-                  android:textColor="@color/darkGray"
-                  android:textSize="@dimen/text_size12"
-                  tools:text="Released"
-                  />
-
-              <TextView
-                  style="@style/TextBoldFont"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:text="@string/release_date"
-                  android:textColor="@color/colorAccent"
-                  android:textSize="@dimen/text_size14"
-                  />
-
-              <View
-                  style="@style/TextBoldFont"
-                  android:layout_width="match_parent"
-                  android:layout_height="0.5dp"
-                  android:layout_marginTop="@dimen/dimen2"
-                  android:layout_marginBottom="@dimen/dimen5"
-                  android:alpha="0.5"
-                  android:background="@color/gray"
-                  />
-
-              <TextView
-                  style="@style/TextMediumFont"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:layout_marginBottom="@dimen/dimen10"
-                  android:alpha="0.6"
-                  android:text="@{movie.releaseDateCasted}"
-                  android:textColor="@color/darkGray"
-                  android:textSize="@dimen/text_size12"
-                  tools:text="12 sep 2019"
-                  />
-
-              <TextView
-                  style="@style/TextBoldFont"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:text="@string/spoken_languages"
-                  android:textColor="@color/colorAccent"
-                  android:textSize="@dimen/text_size14"
-                  />
-
-              <View
-                  style="@style/TextBoldFont"
-                  android:layout_width="match_parent"
-                  android:layout_height="0.5dp"
-                  android:layout_marginTop="@dimen/dimen2"
-                  android:layout_marginBottom="@dimen/dimen5"
-                  android:alpha="0.5"
-                  android:background="@color/gray"
-                  />
-
-              <TextView
-                  style="@style/TextMediumFont"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:layout_marginBottom="@dimen/dimen10"
-                  android:alpha="0.6"
-                  android:text="@{movie.spokenLanguagesStr}"
-                  android:textColor="@color/darkGray"
-                  android:textSize="@dimen/text_size12"
-                  tools:text="English, Italy"
-                  />
-
               <LinearLayout
-                  android:id="@+id/budget_container"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:orientation="vertical"
-                  android:visibility="gone"
+                  android:visibility="@{movie.overview.isEmpty() || movie.overview == null ? View.GONE : View.VISIBLE, default=gone}"
+                  >
+
+                <TextView
+                    style="@style/TextBoldFont"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/overview"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text_size14"
+                    />
+
+                <View
+                    style="@style/TextBoldFont"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/dimen2"
+                    android:layout_marginBottom="@dimen/dimen5"
+                    android:alpha="0.5"
+                    android:background="@color/gray"
+                    />
+
+                <TextView
+                    style="@style/TextMediumFont"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen10"
+                    android:alpha="0.6"
+                    android:text="@{movie.overview}"
+                    android:textColor="@color/darkGray"
+                    android:textSize="@dimen/text_size12"
+                    tools:text="Movie extra details"
+                    />
+
+              </LinearLayout>
+
+              <LinearLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:visibility="@{movie.status.isEmpty() || movie.status == null ? View.GONE : View.VISIBLE, default=gone}"
+                  >
+
+                <TextView
+                    style="@style/TextBoldFont"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/status"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text_size14"
+                    />
+
+                <View
+                    style="@style/TextBoldFont"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/dimen2"
+                    android:layout_marginBottom="@dimen/dimen5"
+                    android:alpha="0.5"
+                    android:background="@color/gray"
+                    />
+
+                <TextView
+                    style="@style/TextMediumFont"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen10"
+                    android:alpha="0.6"
+                    android:text="@{movie.status}"
+                    android:textColor="@color/darkGray"
+                    android:textSize="@dimen/text_size12"
+                    tools:text="Released"
+                    />
+
+              </LinearLayout>
+
+              <LinearLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:visibility="@{movie.releaseDateCasted.isEmpty() || movie.releaseDateCasted == null ? View.GONE : View.VISIBLE, default=gone}"
+                  >
+
+                <TextView
+                    style="@style/TextBoldFont"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/release_date"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text_size14"
+                    />
+
+                <View
+                    style="@style/TextBoldFont"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/dimen2"
+                    android:layout_marginBottom="@dimen/dimen5"
+                    android:alpha="0.5"
+                    android:background="@color/gray"
+                    />
+
+                <TextView
+                    style="@style/TextMediumFont"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen10"
+                    android:alpha="0.6"
+                    android:text="@{movie.releaseDateCasted}"
+                    android:textColor="@color/darkGray"
+                    android:textSize="@dimen/text_size12"
+                    tools:text="12 sep 2019"
+                    />
+
+              </LinearLayout>
+
+              <LinearLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:visibility="@{movie.spokenLanguagesStr.isEmpty() || movie.spokenLanguagesStr == null ? View.GONE : View.VISIBLE, default=gone}"
+                  >
+
+                <TextView
+                    style="@style/TextBoldFont"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/spoken_languages"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text_size14"
+                    />
+
+                <View
+                    style="@style/TextBoldFont"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/dimen2"
+                    android:layout_marginBottom="@dimen/dimen5"
+                    android:alpha="0.5"
+                    android:background="@color/gray"
+                    />
+
+                <TextView
+                    style="@style/TextMediumFont"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen10"
+                    android:alpha="0.6"
+                    android:text="@{movie.spokenLanguagesStr}"
+                    android:textColor="@color/darkGray"
+                    android:textSize="@dimen/text_size12"
+                    tools:text="English, Italy"
+                    />
+
+              </LinearLayout>
+
+              <LinearLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:visibility="@{movie.budgetFormatted.isEmpty() || movie.budgetFormatted == null ? View.GONE : View.VISIBLE, default=gone}"
                   >
 
                 <TextView
@@ -280,43 +315,51 @@
 
               </LinearLayout>
 
-              <TextView
-                  style="@style/TextBoldFont"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:text="@string/production_countries"
-                  android:textColor="@color/colorAccent"
-                  android:textSize="@dimen/text_size14"
-                  />
-
-              <View
-                  style="@style/TextBoldFont"
-                  android:layout_width="match_parent"
-                  android:layout_height="0.5dp"
-                  android:layout_marginTop="@dimen/dimen2"
-                  android:layout_marginBottom="@dimen/dimen5"
-                  android:alpha="0.5"
-                  android:background="@color/gray"
-                  />
-
-              <TextView
-                  style="@style/TextMediumFont"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:layout_marginBottom="@dimen/dimen10"
-                  android:alpha="0.6"
-                  android:text="@{movie.productionCountriesStr}"
-                  android:textColor="@color/darkGray"
-                  android:textSize="@dimen/text_size12"
-                  tools:text="KSA, USA"
-                  />
-
               <LinearLayout
-                  android:id="@+id/production_companies_container"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:orientation="vertical"
-                  android:visibility="gone"
+                  android:visibility="@{movie.productionCountriesStr.isEmpty() || movie.productionCountriesStr == null ? View.GONE : View.VISIBLE, default=gone}"
+                  >
+
+                <TextView
+                    style="@style/TextBoldFont"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/production_countries"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text_size14"
+                    />
+
+                <View
+                    style="@style/TextBoldFont"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/dimen2"
+                    android:layout_marginBottom="@dimen/dimen5"
+                    android:alpha="0.5"
+                    android:background="@color/gray"
+                    />
+
+                <TextView
+                    style="@style/TextMediumFont"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen10"
+                    android:alpha="0.6"
+                    android:text="@{movie.productionCountriesStr}"
+                    android:textColor="@color/darkGray"
+                    android:textSize="@dimen/text_size12"
+                    tools:text="KSA, USA"
+                    />
+
+              </LinearLayout>
+
+              <LinearLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:visibility="@{movie.production_companies.isEmpty() || movie.production_companies == null ? View.GONE : View.VISIBLE, default=gone}"
                   >
 
                 <TextView
@@ -362,7 +405,7 @@
           android:layout_height="wrap_content"
           android:layout_below="@id/backdrop_container"
           android:layout_marginStart="@dimen/dimen36"
-          android:layout_marginTop="-65dp"
+          android:layout_marginTop="-75dp"
           android:layout_marginEnd="@dimen/dimen36"
           android:layout_marginBottom="@dimen/dimen5"
           android:orientation="horizontal"
@@ -412,7 +455,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen5"
-            android:layout_marginTop="@dimen/dimen50"
+            android:layout_marginTop="@dimen/dimen65"
             android:orientation="vertical"
             >
 
@@ -436,6 +479,7 @@
               android:text="@{movie.genresInfo}"
               android:textColor="@color/darkGray"
               android:textSize="@dimen/text_size12"
+              android:visibility="@{movie.genresInfo.isEmpty() || movie.genresInfo == null ? View.GONE : View.VISIBLE, default=gone}"
               tools:text="Tv Shows/ Drama"
               />
 

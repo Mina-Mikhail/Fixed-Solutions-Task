@@ -116,7 +116,7 @@ public class PopularMoviesFragment
 
   private void getData() {
     showProgress();
-    getViewModel().getMovies(Constants.SORT_BY);
+    getViewModel().getMovies(Constants.SORT_BY, 1);
   }
 
   @Override

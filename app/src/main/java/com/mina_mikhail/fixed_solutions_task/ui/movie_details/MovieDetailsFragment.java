@@ -103,14 +103,8 @@ public class MovieDetailsFragment
                 && !getViewModel().getMovieDetailsData().getData().getProduction_companies()
                 .isEmpty()) {
 
-              getViewDataBinding().productionCompaniesContainer.setVisibility(View.VISIBLE);
-
               setupCompaniesRecyclerView(
                   getViewModel().getMovieDetailsData().getData().getProduction_companies());
-            }
-
-            if (getViewModel().getMovieDetailsData().getData().getBudget() != 0) {
-              getViewDataBinding().budgetContainer.setVisibility(View.VISIBLE);
             }
 
             showData();
