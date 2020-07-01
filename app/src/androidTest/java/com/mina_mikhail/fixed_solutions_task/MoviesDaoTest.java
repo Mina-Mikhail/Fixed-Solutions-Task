@@ -47,7 +47,7 @@ public class MoviesDaoTest {
       e.printStackTrace();
     }
 
-    // check test result
+    // Check test result
     assertEquals(1, movies.size());
     assertEquals(70707, movies.get(0).getId());
   }
