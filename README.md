@@ -31,12 +31,13 @@ I have used MVVM to build my project.<br />
 :point_right: [SimpleRatingBar](https://github.com/ome450901/SimpleRatingBar) - For Rating Bar. <br />
 :point_right: [Navigation Component](https://developer.android.com/guide/navigation/navigation-getting-started) - For navigating between fragments. <br />
 :point_right: [Safe Args](https://developer.android.com/jetpack/androidx/releases/navigation#safe_args) - For sending arguments safely between fragments. <br />
+:point_right: [PagingLibrary](https://developer.android.com/topic/libraries/architecture/paging) - For Infinite Scrolling. <br />
 
 
 ## <b>To Do in Future: </b> <br />
 - [x]  Use Android Navigation Component Library.<br />
 - [x]  Use AndroidX.<br />
-- [ ]  Infinite Scrolling.<br />
+- [x]  Infinite Scrolling with Paging Library.<br />
 - [ ]  Apply some Unit Tests.<br />
 - [ ]  Kotlin Version (will be in a separate branch).<br />
 
