@@ -3,8 +3,10 @@ This repo for Fixed Solutions Android Task using www.themoviedb.org
 
 ## <b>Task Description: </b> <br />
 :point_right: Need to show list of movies returned from api. <br />
+:point_right: Need to show details of each movie returned from api. <br />
 :point_right: Sort this list of movies from newest to oldest movies. <br />
 :point_right: Cache the movies list and every movie details to show it from Room DB in case no internet connection. <br />
+:point_right: Infinte Scrolling using Paging Library. <br />
 
 
 | Home Screen                    | Movie Details Screen              | 
