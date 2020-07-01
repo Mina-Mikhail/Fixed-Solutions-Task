@@ -3,7 +3,7 @@ package com.mina_mikhail.fixed_solutions_task.data.source.local.dp.dao;
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Query;
-import com.mina_mikhail.fixed_solutions_task.data.model.MovieDetails;
+import com.mina_mikhail.fixed_solutions_task.data.model.api.MovieDetails;
 
 @Dao
 public interface MovieDetailsDao

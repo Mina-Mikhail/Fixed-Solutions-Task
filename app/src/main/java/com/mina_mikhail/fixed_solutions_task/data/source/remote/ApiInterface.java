@@ -1,6 +1,6 @@
 package com.mina_mikhail.fixed_solutions_task.data.source.remote;
 
-import com.mina_mikhail.fixed_solutions_task.data.model.MovieDetails;
+import com.mina_mikhail.fixed_solutions_task.data.model.api.MovieDetails;
 import com.mina_mikhail.fixed_solutions_task.data.source.remote.response.PopularMoviesResponse;
 import io.reactivex.Single;
 import retrofit2.http.GET;

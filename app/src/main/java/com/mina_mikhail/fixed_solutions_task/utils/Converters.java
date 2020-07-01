@@ -3,10 +3,10 @@ package com.mina_mikhail.fixed_solutions_task.utils;
 import androidx.room.TypeConverter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.mina_mikhail.fixed_solutions_task.data.model.Genre;
-import com.mina_mikhail.fixed_solutions_task.data.model.ProductionCompany;
-import com.mina_mikhail.fixed_solutions_task.data.model.ProductionCountry;
-import com.mina_mikhail.fixed_solutions_task.data.model.SpokenLanguage;
+import com.mina_mikhail.fixed_solutions_task.data.model.api.Genre;
+import com.mina_mikhail.fixed_solutions_task.data.model.api.ProductionCompany;
+import com.mina_mikhail.fixed_solutions_task.data.model.api.ProductionCountry;
+import com.mina_mikhail.fixed_solutions_task.data.model.api.SpokenLanguage;
 import java.lang.reflect.Type;
 import java.util.List;
 

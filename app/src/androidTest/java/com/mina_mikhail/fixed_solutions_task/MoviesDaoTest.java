@@ -3,7 +3,7 @@ package com.mina_mikhail.fixed_solutions_task;
 import android.content.Context;
 import androidx.room.Room;
 import androidx.test.platform.app.InstrumentationRegistry;
-import com.mina_mikhail.fixed_solutions_task.data.model.Movie;
+import com.mina_mikhail.fixed_solutions_task.data.model.api.Movie;
 import com.mina_mikhail.fixed_solutions_task.data.source.local.dp.AppDatabase;
 import com.mina_mikhail.fixed_solutions_task.data.source.local.dp.dao.PopularMoviesDao;
 import com.mina_mikhail.fixed_solutions_task.utils.LiveDataTestUtil;

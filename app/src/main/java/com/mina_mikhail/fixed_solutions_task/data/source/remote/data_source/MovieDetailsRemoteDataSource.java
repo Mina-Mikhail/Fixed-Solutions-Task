@@ -2,8 +2,8 @@ package com.mina_mikhail.fixed_solutions_task.data.source.remote.data_source;
 
 import com.mina_mikhail.fixed_solutions_task.R;
 import com.mina_mikhail.fixed_solutions_task.app.MyApplication;
-import com.mina_mikhail.fixed_solutions_task.data.model.MovieDetails;
-import com.mina_mikhail.fixed_solutions_task.data.model.RemoteDataSource;
+import com.mina_mikhail.fixed_solutions_task.data.model.api.MovieDetails;
+import com.mina_mikhail.fixed_solutions_task.data.model.other.RemoteDataSource;
 import com.mina_mikhail.fixed_solutions_task.data.source.local.dp.data_source.MovieDetailsLocalDataSource;
 import com.mina_mikhail.fixed_solutions_task.data.source.remote.ApiClient;
 import com.mina_mikhail.fixed_solutions_task.utils.NetworkUtils;

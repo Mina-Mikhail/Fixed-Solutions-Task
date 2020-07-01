@@ -1,4 +1,4 @@
-package com.mina_mikhail.fixed_solutions_task.data.model;
+package com.mina_mikhail.fixed_solutions_task.data.model.api;
 
 import com.mina_mikhail.fixed_solutions_task.utils.Constants;
 

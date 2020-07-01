@@ -1,8 +1,8 @@
 package com.mina_mikhail.fixed_solutions_task.ui.popular_movies;
 
 import com.mina_mikhail.fixed_solutions_task.app.MyApplication;
-import com.mina_mikhail.fixed_solutions_task.data.model.Movie;
-import com.mina_mikhail.fixed_solutions_task.data.model.RemoteDataSource;
+import com.mina_mikhail.fixed_solutions_task.data.model.api.Movie;
+import com.mina_mikhail.fixed_solutions_task.data.model.other.RemoteDataSource;
 import com.mina_mikhail.fixed_solutions_task.data.repo.PopularMoviesRepository;
 import com.mina_mikhail.fixed_solutions_task.data.source.local.dp.AppDatabase;
 import com.mina_mikhail.fixed_solutions_task.ui.base.BaseViewModel;

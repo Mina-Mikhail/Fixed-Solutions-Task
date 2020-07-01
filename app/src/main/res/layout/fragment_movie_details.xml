@@ -13,7 +13,7 @@
 
     <variable
         name="movie"
-        type="com.mina_mikhail.fixed_solutions_task.data.model.MovieDetails"
+        type="com.mina_mikhail.fixed_solutions_task.data.model.api.MovieDetails"
         />
 
     <import type="android.view.View" />

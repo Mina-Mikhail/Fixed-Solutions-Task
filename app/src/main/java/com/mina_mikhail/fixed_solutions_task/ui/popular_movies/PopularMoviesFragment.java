@@ -10,7 +10,7 @@ import androidx.navigation.Navigation;
 import com.mina_mikhail.fixed_solutions_task.BR;
 import com.mina_mikhail.fixed_solutions_task.R;
 import com.mina_mikhail.fixed_solutions_task.data.enums.NetworkState;
-import com.mina_mikhail.fixed_solutions_task.data.model.Movie;
+import com.mina_mikhail.fixed_solutions_task.data.model.api.Movie;
 import com.mina_mikhail.fixed_solutions_task.databinding.FragmentPopularMoviesBinding;
 import com.mina_mikhail.fixed_solutions_task.ui.base.BaseFragment;
 import com.mina_mikhail.fixed_solutions_task.utils.CommonUtils;

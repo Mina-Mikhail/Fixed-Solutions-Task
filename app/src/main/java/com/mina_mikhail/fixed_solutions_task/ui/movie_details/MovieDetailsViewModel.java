@@ -2,8 +2,8 @@ package com.mina_mikhail.fixed_solutions_task.ui.movie_details;
 
 import androidx.lifecycle.LiveData;
 import com.mina_mikhail.fixed_solutions_task.app.MyApplication;
-import com.mina_mikhail.fixed_solutions_task.data.model.MovieDetails;
-import com.mina_mikhail.fixed_solutions_task.data.model.RemoteDataSource;
+import com.mina_mikhail.fixed_solutions_task.data.model.api.MovieDetails;
+import com.mina_mikhail.fixed_solutions_task.data.model.other.RemoteDataSource;
 import com.mina_mikhail.fixed_solutions_task.data.repo.MovieDetailsRepository;
 import com.mina_mikhail.fixed_solutions_task.data.source.local.dp.AppDatabase;
 import com.mina_mikhail.fixed_solutions_task.ui.base.BaseViewModel;

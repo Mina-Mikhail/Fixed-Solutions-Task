@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.mina_mikhail.fixed_solutions_task.BR;
 import com.mina_mikhail.fixed_solutions_task.R;
 import com.mina_mikhail.fixed_solutions_task.data.enums.NetworkState;
-import com.mina_mikhail.fixed_solutions_task.data.model.ProductionCompany;
+import com.mina_mikhail.fixed_solutions_task.data.model.api.ProductionCompany;
 import com.mina_mikhail.fixed_solutions_task.databinding.FragmentMovieDetailsBinding;
 import com.mina_mikhail.fixed_solutions_task.ui.base.BaseFragment;
 import com.mina_mikhail.fixed_solutions_task.ui.gallery_slider.GallerySliderActivity;

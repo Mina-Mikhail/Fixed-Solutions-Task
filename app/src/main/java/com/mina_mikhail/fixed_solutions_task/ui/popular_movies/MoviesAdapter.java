@@ -10,7 +10,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import com.mina_mikhail.fixed_solutions_task.R;
 import com.mina_mikhail.fixed_solutions_task.app.MyApplication;
-import com.mina_mikhail.fixed_solutions_task.data.model.Movie;
+import com.mina_mikhail.fixed_solutions_task.data.model.api.Movie;
 import com.mina_mikhail.fixed_solutions_task.databinding.ItemMovieBinding;
 import com.mina_mikhail.fixed_solutions_task.ui.base.BaseAdapter;
 import com.mina_mikhail.fixed_solutions_task.ui.base.BaseViewHolder;

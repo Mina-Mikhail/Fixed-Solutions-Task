@@ -1,6 +1,6 @@
 package com.mina_mikhail.fixed_solutions_task.data.source.remote.response;
 
-import com.mina_mikhail.fixed_solutions_task.data.model.Movie;
+import com.mina_mikhail.fixed_solutions_task.data.model.api.Movie;
 import java.util.List;
 
 public class PopularMoviesResponse
