@@ -1,7 +1,7 @@
 package com.mina_mikhail.fixed_solutions_task.data.model;
 
-import android.arch.lifecycle.MutableLiveData;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 import com.mina_mikhail.fixed_solutions_task.data.enums.NetworkState;
 
 public class RemoteDataSource<T> {

@@ -1,7 +1,5 @@
 package com.mina_mikhail.fixed_solutions_task.ui.gallery_slider;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +8,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Priority;

@@ -1,10 +1,10 @@
 package com.mina_mikhail.fixed_solutions_task.ui.gallery_slider;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import androidx.lifecycle.ViewModelProviders;
 import com.mina_mikhail.fixed_solutions_task.BR;
 import com.mina_mikhail.fixed_solutions_task.R;
 import com.mina_mikhail.fixed_solutions_task.data.model.other.ThumbnailImages;

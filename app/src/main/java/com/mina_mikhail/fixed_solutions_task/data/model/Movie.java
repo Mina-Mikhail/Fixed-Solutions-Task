@@ -1,7 +1,7 @@
 package com.mina_mikhail.fixed_solutions_task.data.model;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 import com.mina_mikhail.fixed_solutions_task.utils.Constants;
 import com.mina_mikhail.fixed_solutions_task.utils.DateTimeUtils;
 

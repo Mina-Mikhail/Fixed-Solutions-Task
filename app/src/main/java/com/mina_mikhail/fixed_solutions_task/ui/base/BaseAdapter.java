@@ -1,8 +1,8 @@
 package com.mina_mikhail.fixed_solutions_task.ui.base;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public abstract class BaseAdapter<T>

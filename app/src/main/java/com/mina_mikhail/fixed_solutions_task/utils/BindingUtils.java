@@ -1,10 +1,10 @@
 package com.mina_mikhail.fixed_solutions_task.utils;
 
-import android.databinding.BindingAdapter;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import androidx.databinding.BindingAdapter;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.request.RequestOptions;
 import com.mina_mikhail.fixed_solutions_task.R;

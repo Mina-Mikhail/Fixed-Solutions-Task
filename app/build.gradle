@@ -9,7 +9,7 @@ android {
     targetSdkVersion compile_sdk_version
     versionCode 1
     versionName "1.0"
-    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
   }
   buildTypes {
     release {
@@ -47,23 +47,23 @@ dependencies {
     all*.exclude group: 'com.android.support', module: 'support-v13'
   }
 
-  //noinspection GradleCompatible
-  implementation "com.android.support:appcompat-v7:$support_version"
-  implementation "com.android.support:support-v4:$support_version"
-  implementation "com.android.support:design:$support_version"
-  implementation "com.android.support:cardview-v7:$support_version"
-  implementation "com.makeramen:roundedimageview:$rounded_image_view"
-  implementation "com.irozon.sneaker:sneaker:$sneaker"
+  // Support
+  implementation "androidx.appcompat:appcompat:$appcompat"
+  implementation "androidx.legacy:legacy-support-v4:$support_version"
 
   // Arch Components
-  implementation "android.arch.lifecycle:extensions:$arch_comp_version"
-  implementation "android.arch.lifecycle:viewmodel:$arch_comp_version"
-  annotationProcessor "android.arch.lifecycle:compiler:$arch_comp_version"
-  implementation "android.arch.persistence.room:runtime:$room_version"
-  implementation "android.arch.persistence.room:rxjava2:$room_rxjava"
-  annotationProcessor "android.arch.persistence.room:compiler:$room_version"
-  implementation "android.arch.navigation:navigation-fragment:$nav_version"
-  implementation "android.arch.navigation:navigation-ui:$nav_version"
+  implementation "androidx.lifecycle:lifecycle-extensions:$arch_comp_version"
+  implementation "androidx.lifecycle:lifecycle-viewmodel:$arch_comp_version"
+  annotationProcessor "androidx.lifecycle:lifecycle-compiler:$arch_comp_version"
+
+  // Room Database
+  implementation "androidx.room:room-runtime:$room"
+  implementation "androidx.room:room-rxjava2:$room"
+  annotationProcessor "androidx.room:room-compiler:$room"
+
+  // Navigation Component
+  implementation "androidx.navigation:navigation-fragment:$navigation"
+  implementation "androidx.navigation:navigation-ui:$navigation"
 
   // RxJava & RxAndroid
   implementation "io.reactivex.rxjava2:rxjava:$rxjava"
@@ -78,6 +78,15 @@ dependencies {
   implementation "com.facebook.stetho:stetho:$stetho"
   implementation "com.facebook.stetho:stetho-okhttp3:$stetho"
 
+  // UI
+  implementation "com.google.android.material:material:$appcompat"
+  implementation "androidx.cardview:cardview:$support_version"
+  implementation "com.makeramen:roundedimageview:$rounded_image_view"
+  implementation "com.irozon.sneaker:sneaker:$sneaker"
+  implementation "com.github.ybq:Android-SpinKit:$loading_animations" // Loading animations
+  implementation "com.github.chrisbanes:PhotoView:$photo_view" // Zoom imageView
+  implementation "com.github.ome450901:SimpleRatingBar:$simple_rating_bar"
+
   // Gallery
   implementation("com.github.bumptech.glide:glide:$glide") {
     exclude group: "com.android.support"
@@ -87,23 +96,20 @@ dependencies {
 
   // Utils
   implementation "com.squareup.okhttp3:logging-interceptor:$interceptor"
-  implementation "com.github.ybq:Android-SpinKit:$loading_animations"
-  implementation "org.jetbrains:annotations:$annotations"
-  implementation "com.github.ome450901:SimpleRatingBar:$simple_rating_bar"
   implementation "com.jakewharton:butterknife:$butterknife"
   annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife"
   implementation "org.parceler:parceler-api:$parceler_api"
   annotationProcessor "org.parceler:parceler:$parceler_api"
-  implementation "com.github.chrisbanes:PhotoView:$PhotoView" // Zoom imageView
+  implementation "androidx.multidex:multidex:$multidex"
 
   // Dagger
   api "com.google.dagger:dagger:$dagger"
   annotationProcessor "com.google.dagger:dagger-compiler:$dagger"
 
-  // Testing utils
+  // Testing
   testImplementation "junit:junit:$junit"
-  androidTestImplementation "com.android.support.test:runner:$support_test_runner"
-  androidTestImplementation "com.android.support.test.espresso:espresso-core:$support_test_espresso"
+  androidTestImplementation "androidx.test.ext:junit:$junit_ext"
+  androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
 }
 
 // Logger out test results to console

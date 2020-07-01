@@ -1,6 +1,6 @@
 package com.mina_mikhail.fixed_solutions_task.ui.splash;
 
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import com.mina_mikhail.fixed_solutions_task.R;
 import com.mina_mikhail.fixed_solutions_task.databinding.ActivitySplashBinding;
 import com.mina_mikhail.fixed_solutions_task.ui.base.BaseActivity;
@@ -29,7 +29,7 @@ public class SplashActivity
   @Override
   protected void setUpViewModel() {
     mViewModel = new SplashViewModel();
-    mViewModel = ViewModelProviders.of(this).get(SplashViewModel.class);
+    mViewModel = new ViewModelProvider(this).get(SplashViewModel.class);
     getViewDataBinding().setViewModel(getViewModel());
     initBaseObservables();
   }

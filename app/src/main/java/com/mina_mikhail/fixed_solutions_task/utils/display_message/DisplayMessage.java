@@ -1,6 +1,6 @@
 package com.mina_mikhail.fixed_solutions_task.utils.display_message;
 
-import android.arch.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LifecycleOwner;
 import com.mina_mikhail.fixed_solutions_task.utils.SingleLiveEvent;
 
 public class DisplayMessage

@@ -1,8 +1,8 @@
 package com.mina_mikhail.fixed_solutions_task.ui.main;
 
 import android.app.Activity;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import androidx.lifecycle.ViewModelProviders;
 import com.mina_mikhail.fixed_solutions_task.BR;
 import com.mina_mikhail.fixed_solutions_task.R;
 import com.mina_mikhail.fixed_solutions_task.databinding.ActivityMainBinding;

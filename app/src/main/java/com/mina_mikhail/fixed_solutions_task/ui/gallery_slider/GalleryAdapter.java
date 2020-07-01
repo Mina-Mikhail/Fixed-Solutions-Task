@@ -1,12 +1,12 @@
 package com.mina_mikhail.fixed_solutions_task.ui.gallery_slider;
 
-import android.support.annotation.NonNull;
-import android.support.v4.view.PagerAdapter;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import androidx.annotation.NonNull;
+import androidx.viewpager.widget.PagerAdapter;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.request.RequestOptions;
 import com.github.chrisbanes.photoview.PhotoView;

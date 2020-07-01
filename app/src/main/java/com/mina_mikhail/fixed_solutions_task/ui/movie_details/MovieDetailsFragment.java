@@ -1,9 +1,9 @@
 package com.mina_mikhail.fixed_solutions_task.ui.movie_details;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 import com.mina_mikhail.fixed_solutions_task.BR;
 import com.mina_mikhail.fixed_solutions_task.R;
 import com.mina_mikhail.fixed_solutions_task.data.enums.NetworkState;
@@ -43,8 +43,7 @@ public class MovieDetailsFragment
 
   @Override
   protected void setUpViewModel() {
-    mViewModel = ViewModelProviders.of(this)
-        .get(MovieDetailsViewModel.class);
+    mViewModel = new ViewModelProvider(this).get(MovieDetailsViewModel.class);
     getViewDataBinding().setViewModel(getViewModel());
     initBaseObservables();
   }

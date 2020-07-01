@@ -1,6 +1,6 @@
 package com.mina_mikhail.fixed_solutions_task.ui.movie_details;
 
-import android.arch.lifecycle.LiveData;
+import androidx.lifecycle.LiveData;
 import com.mina_mikhail.fixed_solutions_task.app.MyApplication;
 import com.mina_mikhail.fixed_solutions_task.data.model.MovieDetails;
 import com.mina_mikhail.fixed_solutions_task.data.model.RemoteDataSource;

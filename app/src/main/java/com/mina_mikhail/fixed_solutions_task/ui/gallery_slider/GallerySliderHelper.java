@@ -1,7 +1,7 @@
 package com.mina_mikhail.fixed_solutions_task.ui.gallery_slider;
 
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 import com.mina_mikhail.fixed_solutions_task.data.model.other.ThumbnailImages;
 import com.mina_mikhail.fixed_solutions_task.ui.gallery_slider.widgets.SliderPager;
 import com.mina_mikhail.fixed_solutions_task.utils.CommonUtils;

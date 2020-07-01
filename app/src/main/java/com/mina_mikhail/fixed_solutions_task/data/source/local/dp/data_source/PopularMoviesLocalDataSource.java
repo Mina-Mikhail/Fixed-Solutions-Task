@@ -1,6 +1,6 @@
 package com.mina_mikhail.fixed_solutions_task.data.source.local.dp.data_source;
 
-import android.arch.lifecycle.Observer;
+import androidx.lifecycle.Observer;
 import com.mina_mikhail.fixed_solutions_task.R;
 import com.mina_mikhail.fixed_solutions_task.app.MyApplication;
 import com.mina_mikhail.fixed_solutions_task.data.model.Movie;

@@ -1,6 +1,6 @@
 package com.mina_mikhail.fixed_solutions_task.utils;
 
-import android.arch.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LifecycleOwner;
 
 public class DisplayLoader
     extends SingleLiveEvent<Boolean> {

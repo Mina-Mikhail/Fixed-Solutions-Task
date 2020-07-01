@@ -2,9 +2,9 @@ package com.mina_mikhail.fixed_solutions_task.ui.gallery_slider.widgets;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import androidx.viewpager.widget.ViewPager;
 
 /**
  * Created by mina-mikhail on 29/08/18.

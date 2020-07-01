@@ -1,8 +1,8 @@
 package com.mina_mikhail.fixed_solutions_task.data.model;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
-import android.arch.persistence.room.TypeConverters;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 import com.mina_mikhail.fixed_solutions_task.utils.CommonUtils;
 import com.mina_mikhail.fixed_solutions_task.utils.Constants;
 import com.mina_mikhail.fixed_solutions_task.utils.Converters;

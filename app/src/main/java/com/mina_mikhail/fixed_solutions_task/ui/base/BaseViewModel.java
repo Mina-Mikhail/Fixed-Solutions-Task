@@ -1,6 +1,6 @@
 package com.mina_mikhail.fixed_solutions_task.ui.base;
 
-import android.arch.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModel;
 import com.mina_mikhail.fixed_solutions_task.utils.DisplayLoader;
 import com.mina_mikhail.fixed_solutions_task.utils.SingleLiveEvent;
 import com.mina_mikhail.fixed_solutions_task.utils.display_message.DisplayMessage;

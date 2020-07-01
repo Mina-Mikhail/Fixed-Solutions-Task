@@ -1,6 +1,6 @@
 package com.mina_mikhail.fixed_solutions_task.ui.splash;
 
-import android.arch.lifecycle.LiveData;
+import androidx.lifecycle.LiveData;
 import com.mina_mikhail.fixed_solutions_task.ui.base.BaseViewModel;
 import com.mina_mikhail.fixed_solutions_task.utils.SingleLiveEvent;
 

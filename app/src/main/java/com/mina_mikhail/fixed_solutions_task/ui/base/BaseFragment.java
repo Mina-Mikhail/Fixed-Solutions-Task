@@ -1,17 +1,17 @@
 package com.mina_mikhail.fixed_solutions_task.ui.base;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
+import androidx.fragment.app.Fragment;
 import com.mina_mikhail.fixed_solutions_task.utils.DisplayLoader;
 import com.mina_mikhail.fixed_solutions_task.utils.display_message.DisplayMessage;
 import com.mina_mikhail.fixed_solutions_task.utils.display_message.MessageType;
