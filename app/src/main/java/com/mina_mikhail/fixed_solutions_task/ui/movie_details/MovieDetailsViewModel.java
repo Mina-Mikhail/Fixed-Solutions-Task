@@ -5,7 +5,6 @@ import com.mina_mikhail.fixed_solutions_task.app.MyApplication;
 import com.mina_mikhail.fixed_solutions_task.data.model.api.MovieDetails;
 import com.mina_mikhail.fixed_solutions_task.data.model.other.RemoteDataSource;
 import com.mina_mikhail.fixed_solutions_task.data.repo.MovieDetailsRepository;
-import com.mina_mikhail.fixed_solutions_task.data.source.local.dp.AppDatabase;
 import com.mina_mikhail.fixed_solutions_task.ui.base.BaseViewModel;
 import com.mina_mikhail.fixed_solutions_task.utils.SingleLiveEvent;
 import java.util.ArrayList;
@@ -66,7 +65,6 @@ public class MovieDetailsViewModel
 
   @Override
   protected void onCleared() {
-    AppDatabase.destroyInstance();
     repository.destroyInstance(movieID);
     super.onCleared();
   }

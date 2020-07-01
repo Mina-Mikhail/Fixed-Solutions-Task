@@ -1,6 +1,6 @@
 package com.mina_mikhail.fixed_solutions_task.data.source.local.dp.data_source;
 
-import androidx.lifecycle.Observer;
+import androidx.paging.DataSource;
 import com.mina_mikhail.fixed_solutions_task.app.MyApplication;
 import com.mina_mikhail.fixed_solutions_task.data.model.api.Movie;
 import com.mina_mikhail.fixed_solutions_task.data.source.local.dp.AppDatabase;
@@ -11,7 +11,6 @@ import io.reactivex.CompletableObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -19,27 +18,14 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
 public class PopularMoviesLocalDataSource {
 
   private final PopularMoviesDao moviesDao;
-  private List<Movie> data;
-  private Observer<List<Movie>> localMoviesObserver;
 
   public PopularMoviesLocalDataSource() {
     AppDatabase appDatabase = AppDatabase.getInstance(MyApplication.getInstance());
     moviesDao = appDatabase.getPopularMoviesDao();
-    data = new ArrayList<>();
   }
 
-  public List<Movie> getMovies() {
-    localMoviesObserver = movies -> {
-      if (movies != null && !movies.isEmpty()) {
-        data.clear();
-        data.addAll(movies);
-      } else {
-        data.clear();
-      }
-    };
-    moviesDao.getMovies().observeForever(localMoviesObserver);
-
-    return data;
+  public DataSource.Factory<Integer, Movie> getMovies() {
+    return moviesDao.getMovies();
   }
 
   public void insertMovies(List<Movie> movies) {
@@ -89,13 +75,6 @@ public class PopularMoviesLocalDataSource {
             System.out.println("====ERROR-CLEAR-MOVIES==>> " + e.getMessage());
           }
         });
-  }
-
-  public void unRegisterObservers() {
-    if (localMoviesObserver != null) {
-      moviesDao.getMovies().removeObserver(localMoviesObserver);
-      localMoviesObserver = null;
-    }
   }
 
   public interface ClearLocalDataCallback {

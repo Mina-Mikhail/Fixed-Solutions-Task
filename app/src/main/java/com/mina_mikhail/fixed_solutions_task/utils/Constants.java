@@ -13,4 +13,7 @@ public final class Constants {
 
   public static final String API_DATE_FORMAT = "yyyy-MM-dd";
   public static final String UI_DATE_FORMAT = "EEE, dd MMM yyyy";
+
+  public static final int PAGE_SIZE = 20;
+  public static final int PAGE_PRE_FETCH_DISTANCE = 4;
 }
