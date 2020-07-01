@@ -11,8 +11,6 @@
   <string name="hide">Hide</string>
   <string name="no_image">No Image</string>
   <string name="list_no_result">Sorry, There are no result here!</string>
-  <string name="success_remote_load">Get movies from remote successfully</string>
-  <string name="success_local_load">Get movies from local room successfully</string>
   <string name="success_remote_load_details">Get movie details from remote successfully</string>
   <string name="success_local_load_details">Get movie details from local room successfully</string>
 

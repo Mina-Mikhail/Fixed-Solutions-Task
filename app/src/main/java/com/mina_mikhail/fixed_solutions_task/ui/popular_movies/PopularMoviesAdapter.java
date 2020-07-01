@@ -1,16 +1,12 @@
 package com.mina_mikhail.fixed_solutions_task.ui.popular_movies;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import com.mina_mikhail.fixed_solutions_task.R;
-import com.mina_mikhail.fixed_solutions_task.app.MyApplication;
 import com.mina_mikhail.fixed_solutions_task.data.model.api.Movie;
 import com.mina_mikhail.fixed_solutions_task.databinding.ItemMovieBinding;
 import com.mina_mikhail.fixed_solutions_task.ui.base.BasePagedListAdapter;
@@ -20,8 +16,6 @@ public class PopularMoviesAdapter
     extends BasePagedListAdapter<Movie> {
 
   private MoviesListener listener;
-
-  private int lastPosition = -1;
 
   private static DiffUtil.ItemCallback<Movie> DIFF_CALLBACK = new DiffUtil.ItemCallback<Movie>() {
     @Override
@@ -53,20 +47,6 @@ public class PopularMoviesAdapter
   public void onBindData(RecyclerView.ViewHolder holder, int position) {
     ViewHolder myHolder = (ViewHolder) holder;
     myHolder.onBind(position);
-
-    // add anim to items
-    setAnimation(holder.itemView, position);
-  }
-
-  // start animation
-  private void setAnimation(View viewToAnimate, int position) {
-    // If the bound view wasn't previously displayed on screen, it's animated
-    if (position > lastPosition) {
-      Animation animation = AnimationUtils.loadAnimation(MyApplication.getInstance(),
-          (position > lastPosition) ? R.anim.translate : R.anim.slide_up);
-      viewToAnimate.startAnimation(animation);
-      lastPosition = position;
-    }
   }
 
   // To solve the problem of fast scroll
@@ -86,7 +66,7 @@ public class PopularMoviesAdapter
   @Override
   public long getItemId(int position) {
     // To solve blinking after notifyDataSetChanged()
-    return getCurrentList().get(position).getId();
+    return getItem(position).getId();
   }
 
   public interface MoviesListener {
