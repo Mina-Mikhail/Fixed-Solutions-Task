@@ -7,26 +7,36 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import com.mina_mikhail.fixed_solutions_task.R;
 import com.mina_mikhail.fixed_solutions_task.app.MyApplication;
 import com.mina_mikhail.fixed_solutions_task.data.model.api.Movie;
 import com.mina_mikhail.fixed_solutions_task.databinding.ItemMovieBinding;
-import com.mina_mikhail.fixed_solutions_task.ui.base.BaseAdapter;
+import com.mina_mikhail.fixed_solutions_task.ui.base.BasePagedListAdapter;
 import com.mina_mikhail.fixed_solutions_task.ui.base.BaseViewHolder;
-import java.util.List;
 
-public class MoviesAdapter
-    extends BaseAdapter<Movie> {
+public class PopularMoviesAdapter
+    extends BasePagedListAdapter<Movie> {
 
-  private List<Movie> items;
   private MoviesListener listener;
 
   private int lastPosition = -1;
 
-  MoviesAdapter(List<Movie> items) {
-    super(items);
-    this.items = items;
+  private static DiffUtil.ItemCallback<Movie> DIFF_CALLBACK = new DiffUtil.ItemCallback<Movie>() {
+    @Override
+    public boolean areItemsTheSame(@NonNull Movie oldItem, @NonNull Movie newItem) {
+      return oldItem.getId() == newItem.getId();
+    }
+
+    @Override
+    public boolean areContentsTheSame(@NonNull Movie oldItem, @NonNull Movie newItem) {
+      return oldItem.getId() == newItem.getId();
+    }
+  };
+
+  PopularMoviesAdapter() {
+    super(DIFF_CALLBACK);
   }
 
   @Override
@@ -36,7 +46,7 @@ public class MoviesAdapter
         R.layout.item_movie,
         parent,
         false);
-    return new MoviesAdapter.ViewHolder(binding);
+    return new ViewHolder(binding);
   }
 
   @Override
@@ -70,13 +80,13 @@ public class MoviesAdapter
 
   @Override
   public int getItemCount() {
-    return (items == null ? 0 : items.size());
+    return (getCurrentList() == null ? 0 : getCurrentList().size());
   }
 
   @Override
   public long getItemId(int position) {
     // To solve blinking after notifyDataSetChanged()
-    return items.get(position).getId();
+    return getCurrentList().get(position).getId();
   }
 
   public interface MoviesListener {
@@ -103,10 +113,10 @@ public class MoviesAdapter
 
     @Override
     public void onBind(int position) {
-      itemBinding.setItem(items.get(position));
+      itemBinding.setItem(getItem(position));
       itemBinding.setListener(listener);
 
-      itemBinding.rateAmount.setRating(items.get(position).getVote_average());
+      itemBinding.rateAmount.setRating(getItem(position).getVote_average());
     }
 
     @Override

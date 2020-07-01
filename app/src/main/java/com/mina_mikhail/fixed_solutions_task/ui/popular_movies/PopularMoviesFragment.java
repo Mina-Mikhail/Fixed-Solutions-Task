@@ -9,24 +9,19 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import com.mina_mikhail.fixed_solutions_task.BR;
 import com.mina_mikhail.fixed_solutions_task.R;
-import com.mina_mikhail.fixed_solutions_task.data.enums.NetworkState;
 import com.mina_mikhail.fixed_solutions_task.data.model.api.Movie;
 import com.mina_mikhail.fixed_solutions_task.databinding.FragmentPopularMoviesBinding;
 import com.mina_mikhail.fixed_solutions_task.ui.base.BaseFragment;
 import com.mina_mikhail.fixed_solutions_task.utils.CommonUtils;
-import com.mina_mikhail.fixed_solutions_task.utils.Constants;
-import java.util.ArrayList;
-import java.util.List;
 
 public class PopularMoviesFragment
     extends BaseFragment<FragmentPopularMoviesBinding, PopularMoviesViewModel>
-    implements MoviesAdapter.MoviesListener {
+    implements PopularMoviesAdapter.MoviesListener {
 
   private PopularMoviesViewModel mViewModel;
   private NavController navController;
 
-  private MoviesAdapter moviesAdapter;
-  private List<Movie> movies = new ArrayList<>();
+  private PopularMoviesAdapter moviesAdapter;
 
   @Override
   public int getBindingVariable() {
@@ -108,7 +103,7 @@ public class PopularMoviesFragment
 
   private void initMoviesRecyclerView() {
     CommonUtils.configRecyclerView(getViewDataBinding().includedList.recyclerView, true);
-    moviesAdapter = new MoviesAdapter(movies);
+    moviesAdapter = new PopularMoviesAdapter();
     moviesAdapter.setHasStableIds(true);
     getViewDataBinding().includedList.recyclerView.setAdapter(moviesAdapter);
     getViewDataBinding().includedList.reloadBtn.setOnClickListener(v -> getData());
@@ -116,26 +111,14 @@ public class PopularMoviesFragment
 
   private void getData() {
     showProgress();
-    getViewModel().getMovies(Constants.SORT_BY, 1);
+    getViewModel().getMovies();
   }
 
   @Override
   protected void setUpObservables() {
-    getViewModel().getMoviesData().getNetworkState().observe(this, state -> {
-      if (state != null) {
-        if (state == NetworkState.LOADED) {
-          if (!getViewModel().getMoviesData().getData().isEmpty()) {
-            moviesAdapter.replaceItems(getViewModel().getMoviesData().getData());
-            showData();
-          } else {
-            showNoData();
-          }
-        } else if (state == NetworkState.FAILED) {
-          showNoData();
-        } else if (state == NetworkState.NO_INTERNET) {
-          showNoInternet();
-        }
-      }
+    getViewModel().moviePagedList().observe(this, movies -> {
+      moviesAdapter.submitList(movies);
+      showData();
     });
   }
 

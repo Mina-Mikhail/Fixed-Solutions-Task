@@ -1,40 +1,49 @@
 package com.mina_mikhail.fixed_solutions_task.ui.popular_movies;
 
+import androidx.lifecycle.LiveData;
+import androidx.paging.LivePagedListBuilder;
+import androidx.paging.PagedList;
 import com.mina_mikhail.fixed_solutions_task.app.MyApplication;
 import com.mina_mikhail.fixed_solutions_task.data.model.api.Movie;
-import com.mina_mikhail.fixed_solutions_task.data.model.other.RemoteDataSource;
-import com.mina_mikhail.fixed_solutions_task.data.repo.PopularMoviesRepository;
 import com.mina_mikhail.fixed_solutions_task.data.source.local.dp.AppDatabase;
+import com.mina_mikhail.fixed_solutions_task.data.source.remote.data_source.PopularMoviesDataSourceFactory;
 import com.mina_mikhail.fixed_solutions_task.ui.base.BaseViewModel;
-import java.util.List;
-import javax.inject.Inject;
+import com.mina_mikhail.fixed_solutions_task.utils.NetworkUtils;
 
 public class PopularMoviesViewModel
     extends BaseViewModel {
 
-  @Inject
-  PopularMoviesRepository repository;
-
-  private RemoteDataSource<List<Movie>> movies;
+  private LiveData<PagedList<Movie>> moviePagedList;
 
   public PopularMoviesViewModel() {
-    MyApplication.getInstance().getAppComponent().inject(this);
 
-    movies = new RemoteDataSource<>();
   }
 
-  void getMovies(String sortBy, int pageNumber) {
-    movies = repository.getMovies(sortBy, pageNumber);
+  void getMovies() {
+    if (NetworkUtils.isNetworkConnected(MyApplication.getInstance())) {
+      PopularMoviesDataSourceFactory moviesDataSourceFactory = new PopularMoviesDataSourceFactory();
+      moviesDataSourceFactory.getItemLiveDataSource();
+
+      PagedList.Config pageConfig = (new PagedList.Config.Builder())
+          .setEnablePlaceholders(false)
+          .setPageSize(20)
+          .setPrefetchDistance(4)
+          .build();
+
+      moviePagedList =
+          (new LivePagedListBuilder<Long, Movie>(moviesDataSourceFactory, pageConfig)).build();
+    } else {
+      // TODO: Get data from room
+    }
   }
 
-  RemoteDataSource<List<Movie>> getMoviesData() {
-    return movies;
+  LiveData<PagedList<Movie>> moviePagedList() {
+    return moviePagedList;
   }
 
   @Override
   protected void onCleared() {
     AppDatabase.destroyInstance();
-    repository.destroyInstance();
     super.onCleared();
   }
 }

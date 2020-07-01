@@ -1,12 +1,13 @@
 package com.mina_mikhail.fixed_solutions_task.data.source.remote.data_source;
 
-import com.mina_mikhail.fixed_solutions_task.R;
+import androidx.annotation.NonNull;
+import androidx.paging.PageKeyedDataSource;
 import com.mina_mikhail.fixed_solutions_task.app.MyApplication;
 import com.mina_mikhail.fixed_solutions_task.data.model.api.Movie;
-import com.mina_mikhail.fixed_solutions_task.data.model.other.RemoteDataSource;
 import com.mina_mikhail.fixed_solutions_task.data.source.local.dp.data_source.PopularMoviesLocalDataSource;
 import com.mina_mikhail.fixed_solutions_task.data.source.remote.ApiClient;
 import com.mina_mikhail.fixed_solutions_task.data.source.remote.response.PopularMoviesResponse;
+import com.mina_mikhail.fixed_solutions_task.utils.Constants;
 import com.mina_mikhail.fixed_solutions_task.utils.NetworkUtils;
 import com.uber.autodispose.ScopeProvider;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -14,24 +15,23 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import java.util.List;
-import java.util.Objects;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
-public class PopularMoviesRemoteDataSource {
+public class PopularMoviesRemoteDataSource
+    extends PageKeyedDataSource<Long, Movie> {
 
   private CompositeDisposable disposable;
-  private RemoteDataSource<List<Movie>> data;
 
   public PopularMoviesRemoteDataSource() {
-    data = new RemoteDataSource<>();
     disposable = new CompositeDisposable();
   }
 
-  public RemoteDataSource<List<Movie>> getMovies(String sortBy, int pageNumber) {
-    data.setIsLoading();
+  @Override
+  public void loadInitial(@NonNull LoadInitialParams<Long> params
+      , @NonNull final LoadInitialCallback<Long, Movie> callback) {
 
-    disposable.add(ApiClient.getInstance().getApiService().getMovies(sortBy, pageNumber)
+    disposable.add(ApiClient.getInstance().getApiService().getMovies(Constants.SORT_BY, 1)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .as(autoDisposable(ScopeProvider.UNBOUND))
@@ -40,11 +40,12 @@ public class PopularMoviesRemoteDataSource {
           public void onSuccess(PopularMoviesResponse moviesResponse) {
             if (!disposable.isDisposed()) {
               if (moviesResponse != null
-                  && moviesResponse.getResults() != null) {
-                data.setIsLoaded(moviesResponse.getResults(),
-                    MyApplication.getInstance().getString(R.string.success_remote_load));
+                  && moviesResponse.getResults() != null
+                  && !moviesResponse.getResults().isEmpty()) {
 
-                saveMoviesToLocal(moviesResponse.getResults());
+                callback.onResult(moviesResponse.getResults(), null, (long) 2);
+
+                saveMoviesToLocal(moviesResponse.getResults(), true);
               }
 
               dispose();
@@ -55,21 +56,72 @@ public class PopularMoviesRemoteDataSource {
           public void onError(Throwable e) {
             if (!disposable.isDisposed()) {
               if (!NetworkUtils.isNetworkConnected(MyApplication.getInstance())) {
-                data.setNoInternet();
+                //   data.setNoInternet();
               } else {
-                data.setFailed(Objects.requireNonNull(e.getMessage()));
+                //         data.setFailed(Objects.requireNonNull(e.getMessage()));
               }
 
               dispose();
             }
           }
         }));
-
-    return data;
   }
 
-  private void saveMoviesToLocal(List<Movie> remoteMoviesList) {
+  @Override
+  public void loadBefore(@NonNull LoadParams<Long> params,
+      @NonNull LoadCallback<Long, Movie> callback) {
+
+  }
+
+  @Override
+  public void loadAfter(@NonNull final LoadParams<Long> params
+      , @NonNull final LoadCallback<Long, Movie> callback) {
+
+    disposable.add(ApiClient.getInstance().getApiService().getMovies(Constants.SORT_BY, params.key)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .as(autoDisposable(ScopeProvider.UNBOUND))
+        .subscribeWith(new DisposableSingleObserver<PopularMoviesResponse>() {
+          @Override
+          public void onSuccess(PopularMoviesResponse moviesResponse) {
+            if (!disposable.isDisposed()) {
+              if (moviesResponse != null
+                  && moviesResponse.getResults() != null
+                  && !moviesResponse.getResults().isEmpty()) {
+
+                long nextPage =
+                    (params.key == moviesResponse.getTotal_pages()) ? null : params.key + 1;
+
+                callback.onResult(moviesResponse.getResults(), nextPage);
+
+                saveMoviesToLocal(moviesResponse.getResults(), false);
+              }
+
+              dispose();
+            }
+          }
+
+          @Override
+          public void onError(Throwable e) {
+            if (!disposable.isDisposed()) {
+              if (!NetworkUtils.isNetworkConnected(MyApplication.getInstance())) {
+                //   data.setNoInternet();
+              } else {
+                //         data.setFailed(Objects.requireNonNull(e.getMessage()));
+              }
+
+              dispose();
+            }
+          }
+        }));
+  }
+
+  private void saveMoviesToLocal(List<Movie> remoteMoviesList, boolean clearOldData) {
     PopularMoviesLocalDataSource localDataSource = new PopularMoviesLocalDataSource();
-    localDataSource.clearMovies(() -> localDataSource.insertMovies(remoteMoviesList));
+    if (clearOldData) {
+      localDataSource.clearMovies(() -> localDataSource.insertMovies(remoteMoviesList));
+    } else {
+      localDataSource.insertMovies(remoteMoviesList);
+    }
   }
 }

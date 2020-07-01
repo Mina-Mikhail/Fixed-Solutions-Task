@@ -1,10 +1,8 @@
 package com.mina_mikhail.fixed_solutions_task.data.source.local.dp.data_source;
 
 import androidx.lifecycle.Observer;
-import com.mina_mikhail.fixed_solutions_task.R;
 import com.mina_mikhail.fixed_solutions_task.app.MyApplication;
 import com.mina_mikhail.fixed_solutions_task.data.model.api.Movie;
-import com.mina_mikhail.fixed_solutions_task.data.model.other.RemoteDataSource;
 import com.mina_mikhail.fixed_solutions_task.data.source.local.dp.AppDatabase;
 import com.mina_mikhail.fixed_solutions_task.data.source.local.dp.dao.PopularMoviesDao;
 import com.uber.autodispose.ScopeProvider;
@@ -13,6 +11,7 @@ import io.reactivex.CompletableObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -20,22 +19,22 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
 public class PopularMoviesLocalDataSource {
 
   private final PopularMoviesDao moviesDao;
-  private RemoteDataSource<List<Movie>> data;
+  private List<Movie> data;
   private Observer<List<Movie>> localMoviesObserver;
 
   public PopularMoviesLocalDataSource() {
     AppDatabase appDatabase = AppDatabase.getInstance(MyApplication.getInstance());
     moviesDao = appDatabase.getPopularMoviesDao();
-    data = new RemoteDataSource<>();
+    data = new ArrayList<>();
   }
 
-  public RemoteDataSource<List<Movie>> getMovies() {
+  public List<Movie> getMovies() {
     localMoviesObserver = movies -> {
       if (movies != null && !movies.isEmpty()) {
-        data.setIsLoaded(movies,
-            MyApplication.getInstance().getString(R.string.success_local_load));
+        data.clear();
+        data.addAll(movies);
       } else {
-        data.setFailed("");
+        data.clear();
       }
     };
     moviesDao.getMovies().observeForever(localMoviesObserver);
@@ -52,17 +51,17 @@ public class PopularMoviesLocalDataSource {
         .subscribe(new CompletableObserver() {
           @Override
           public void onSubscribe(Disposable d) {
-            System.out.println("==SUB==");
+            System.out.println("====SUB-INSERT-MOVIES==");
           }
 
           @Override
           public void onComplete() {
-            System.out.println("==COMPLETE==");
+            System.out.println("====COMPLETE-INSERT-MOVIES==");
           }
 
           @Override
           public void onError(Throwable e) {
-            System.out.println("==ERROR==>> " + e.getMessage());
+            System.out.println("====ERROR-INSERT-MOVIES==>> " + e.getMessage());
           }
         });
   }
@@ -76,18 +75,18 @@ public class PopularMoviesLocalDataSource {
         .subscribe(new CompletableObserver() {
           @Override
           public void onSubscribe(Disposable d) {
-            System.out.println("==SUB==");
+            System.out.println("====SUB-CLEAR-MOVIES==");
           }
 
           @Override
           public void onComplete() {
-            System.out.println("==COMPLETE==");
+            System.out.println("====COMPLETE-CLEAR-MOVIES==");
             clearLocalDataCallback.onLocalCleared();
           }
 
           @Override
           public void onError(Throwable e) {
-            System.out.println("==ERROR==>> " + e.getMessage());
+            System.out.println("====ERROR-CLEAR-MOVIES==>> " + e.getMessage());
           }
         });
   }

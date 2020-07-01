@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface BaseDao<T> {
 
-  @Insert
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
   void insert(List<T> items);
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)

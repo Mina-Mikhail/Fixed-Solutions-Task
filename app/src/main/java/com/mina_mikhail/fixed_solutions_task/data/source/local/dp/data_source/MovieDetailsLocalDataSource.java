@@ -51,17 +51,17 @@ public class MovieDetailsLocalDataSource {
         .subscribe(new CompletableObserver() {
           @Override
           public void onSubscribe(Disposable d) {
-            System.out.println("==SUB==");
+            System.out.println("====SUB-INSERT-MOVIE-DETAILS==");
           }
 
           @Override
           public void onComplete() {
-            System.out.println("==COMPLETE==");
+            System.out.println("====COMPLETE-INSERT-MOVIE-DETAILS==");
           }
 
           @Override
           public void onError(Throwable e) {
-            System.out.println("==ERROR==>> " + e.getMessage());
+            System.out.println("====ERROR-INSERT-MOVIE-DETAILS==>> " + e.getMessage());
           }
         });
   }
@@ -75,18 +75,18 @@ public class MovieDetailsLocalDataSource {
         .subscribe(new CompletableObserver() {
           @Override
           public void onSubscribe(Disposable d) {
-            System.out.println("==SUB==");
+            System.out.println("====SUB-INSERT-MOVIE-DETAILS==");
           }
 
           @Override
           public void onComplete() {
-            System.out.println("==COMPLETE==");
+            System.out.println("====COMPLETE-INSERT-MOVIE-DETAILS==");
             clearLocalDataCallback.onLocalCleared();
           }
 
           @Override
           public void onError(Throwable e) {
-            System.out.println("==ERROR==>> " + e.getMessage());
+            System.out.println("====ERROR-INSERT-MOVIE-DETAILS==>> " + e.getMessage());
           }
         });
   }

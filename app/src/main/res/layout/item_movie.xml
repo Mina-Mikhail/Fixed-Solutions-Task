@@ -14,7 +14,7 @@
 
     <variable
         name="listener"
-        type="com.mina_mikhail.fixed_solutions_task.ui.popular_movies.MoviesAdapter.MoviesListener"
+        type="com.mina_mikhail.fixed_solutions_task.ui.popular_movies.PopularMoviesAdapter.MoviesListener"
         />
 
     <import type="android.view.View" />

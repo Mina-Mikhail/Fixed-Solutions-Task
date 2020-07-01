@@ -2,8 +2,6 @@ package com.mina_mikhail.fixed_solutions_task.data.source.remote;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.mina_mikhail.fixed_solutions_task.utils.Constants;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeUnit;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -37,46 +35,21 @@ public class ApiClient {
       return chain.proceed(newRequest);
     };
 
-    if (android.os.Build.VERSION.SDK_INT > 21) {
-      OkHttpClient okHttpClient = new OkHttpClient.Builder()
-          .readTimeout(120, TimeUnit.SECONDS)
-          .connectTimeout(120, TimeUnit.SECONDS)
-          .addInterceptor(headersInterceptor)
-          .addNetworkInterceptor(new StethoInterceptor())
-          .build();
+    OkHttpClient okHttpClient = new OkHttpClient.Builder()
+        .readTimeout(120, TimeUnit.SECONDS)
+        .connectTimeout(120, TimeUnit.SECONDS)
+        .addInterceptor(headersInterceptor)
+        .addNetworkInterceptor(new StethoInterceptor())
+        .build();
 
-      Retrofit retrofit = new Retrofit.Builder()
-          .client(okHttpClient)
-          .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-          .addConverterFactory(GsonConverterFactory.create())
-          .baseUrl(Constants.BASE_URL)
-          .build();
+    Retrofit retrofit = new Retrofit.Builder()
+        .client(okHttpClient)
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create())
+        .baseUrl(Constants.BASE_URL)
+        .build();
 
-      apiService = retrofit.create(ApiInterface.class);
-    } else {
-      // To solve issue when run on android < 21
-      // problem is no api called and get message ("connection closed by peer")
-      try {
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-            .readTimeout(120, TimeUnit.SECONDS)
-            .connectTimeout(120, TimeUnit.SECONDS)
-            .addInterceptor(headersInterceptor)
-            .addNetworkInterceptor(new StethoInterceptor())
-            .sslSocketFactory(new TLSSocketFactoryCompat())
-            .build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-            .client(okHttpClient)
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(Constants.BASE_URL)
-            .build();
-
-        apiService = retrofit.create(ApiInterface.class);
-      } catch (KeyManagementException | NoSuchAlgorithmException e) {
-        e.printStackTrace();
-      }
-    }
+    apiService = retrofit.create(ApiInterface.class);
   }
 
   public static ApiClient getInstance() {
