@@ -18,6 +18,9 @@ buildscript {
     // Navigation Component
     navigation = '2.3.0'
 
+    // Paging
+    paging = '2.1.2'
+
     // RxJava & RxAndroid
     rxjava = '2.2.0'
     rxandroid = '2.1.1'

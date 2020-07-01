@@ -65,6 +65,9 @@ dependencies {
   implementation "androidx.navigation:navigation-fragment:$navigation"
   implementation "androidx.navigation:navigation-ui:$navigation"
 
+  // Paging
+  implementation "androidx.paging:paging-runtime:$paging"
+
   // RxJava & RxAndroid
   implementation "io.reactivex.rxjava2:rxjava:$rxjava"
   implementation "io.reactivex.rxjava2:rxandroid:$rxandroid"
