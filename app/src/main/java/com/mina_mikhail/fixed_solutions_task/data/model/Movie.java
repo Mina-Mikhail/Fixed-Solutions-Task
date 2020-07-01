@@ -18,7 +18,8 @@ public class Movie {
    * release_date : 2019-09-17
    */
 
-  @PrimaryKey
+  @PrimaryKey(autoGenerate = true)
+  private int local_id;
   private int id;
   private int vote_count;
   private String poster_path;
@@ -27,6 +28,14 @@ public class Movie {
   private String title;
   private float vote_average;
   private String release_date;
+
+  public int getLocal_id() {
+    return local_id;
+  }
+
+  public void setLocal_id(int local_id) {
+    this.local_id = local_id;
+  }
 
   public int getId() {
     return id;
