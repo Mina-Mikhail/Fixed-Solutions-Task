@@ -9,7 +9,7 @@ This repo for Fixed Solutions Android Task using www.themoviedb.org
 
 | Home Screen                    | Movie Details Screen              | 
 |:------------------------------:|:---------------------------------:|
-|![](https://) | ![](https://) |
+|![](https://github.com/Mina-Mikhail/Fixed-Solutions-Task/blob/master/Shots/movies.jpg) | ![](https://github.com/Mina-Mikhail/Fixed-Solutions-Task/blob/master/Shots/movie_details.jpg) |
 
 ## <b>Project Architecture: </b> <br />
 I have used MVVM to build my project.<br />
