@@ -19,9 +19,13 @@ public abstract class AppDatabase
 
   private static volatile AppDatabase INSTANCE;
 
-  public static synchronized AppDatabase getInstance(Context context) {
+  public static AppDatabase getInstance(Context context) {
     if (INSTANCE == null) {
-      INSTANCE = create(context);
+      synchronized (AppDatabase.class) {
+        if (INSTANCE == null) {
+          INSTANCE = create(context);
+        }
+      }
     }
     return INSTANCE;
   }

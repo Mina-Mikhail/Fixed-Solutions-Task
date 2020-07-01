@@ -73,9 +73,7 @@ public class ApiClient {
             .build();
 
         apiService = retrofit.create(ApiInterface.class);
-      } catch (KeyManagementException e) {
-        e.printStackTrace();
-      } catch (NoSuchAlgorithmException e) {
+      } catch (KeyManagementException | NoSuchAlgorithmException e) {
         e.printStackTrace();
       }
     }

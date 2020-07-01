@@ -45,7 +45,7 @@ public class PopularMoviesLocalDataSource {
 
   public void insertMovies(List<Movie> movies) {
     Completable
-        .fromAction(() -> moviesDao.insertMovies(movies))
+        .fromAction(() -> moviesDao.insert(movies))
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .as(autoDisposable(ScopeProvider.UNBOUND))
@@ -69,7 +69,7 @@ public class PopularMoviesLocalDataSource {
 
   public void clearMovies(ClearLocalDataCallback clearLocalDataCallback) {
     Completable
-        .fromAction(moviesDao::clearMovies)
+        .fromAction(moviesDao::clearTable)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .as(autoDisposable(ScopeProvider.UNBOUND))

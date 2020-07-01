@@ -68,6 +68,6 @@ public class MovieDetailsRemoteDataSource {
 
   private void saveMovieToLocal(MovieDetails remoteMovieDetails) {
     MovieDetailsLocalDataSource localDataSource = new MovieDetailsLocalDataSource();
-    localDataSource.clearMovies(() -> localDataSource.insertMovie(remoteMovieDetails));
+    localDataSource.insertMovie(remoteMovieDetails);
   }
 }
