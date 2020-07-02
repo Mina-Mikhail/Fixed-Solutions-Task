@@ -3,6 +3,7 @@ apply plugin: 'androidx.navigation.safeargs'
 
 android {
   compileSdkVersion compile_sdk_version
+  buildToolsVersion "29.0.3"
   defaultConfig {
     applicationId "com.mina_mikhail.fixed_solutions_task"
     minSdkVersion min_sdk_version
@@ -110,13 +111,9 @@ dependencies {
   annotationProcessor "com.google.dagger:dagger-compiler:$dagger"
 
   // Testing
-  testImplementation 'androidx.test.ext:junit:1.1.0'
-  testImplementation 'androidx.test.ext:truth:1.1.0'
-  androidTestImplementation 'androidx.test.ext:junit:1.1.0'
-  androidTestImplementation 'androidx.test.ext:truth:1.1.0'
-  androidTestImplementation 'androidx.test:core:1.1.0'
-  androidTestImplementation 'androidx.test:runner:1.1.1'
-  androidTestUtil 'androidx.test:orchestrator:1.1.1'
+  testImplementation "junit:junit:$junit"
+  androidTestImplementation "androidx.test.ext:junit:$junit_ext"
+  androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
 }
 
 // Logger out test results to console
