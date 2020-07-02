@@ -1,51 +1,67 @@
 package com.mina_mikhail.fixed_solutions_task.ui.popular_movies;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Transformations;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 import com.mina_mikhail.fixed_solutions_task.app.MyApplication;
 import com.mina_mikhail.fixed_solutions_task.data.model.api.Movie;
 import com.mina_mikhail.fixed_solutions_task.data.source.local.dp.data_source.PopularMoviesLocalDataSource;
 import com.mina_mikhail.fixed_solutions_task.data.source.remote.data_source.PopularMoviesDataSourceFactory;
+import com.mina_mikhail.fixed_solutions_task.data.source.remote.data_source.PopularMoviesRemoteDataSource;
 import com.mina_mikhail.fixed_solutions_task.ui.base.BaseViewModel;
 import com.mina_mikhail.fixed_solutions_task.utils.Constants;
+import com.mina_mikhail.fixed_solutions_task.utils.NetworkStatus;
 import com.mina_mikhail.fixed_solutions_task.utils.NetworkUtils;
+import com.mina_mikhail.fixed_solutions_task.utils.SingleLiveEvent;
+import javax.inject.Inject;
 
 public class PopularMoviesViewModel
     extends BaseViewModel {
 
-  private LiveData<PagedList<Movie>> moviePagedList;
+  @Inject
+  PopularMoviesDataSourceFactory moviesDataSourceFactory;
+
+  @Inject
+  PagedList.Config pageConfig;
+
+  private LiveData<PagedList<Movie>> remoteMoviePagedList;
+  private LiveData<PagedList<Movie>> localMoviePagedList;
+  private LiveData<NetworkStatus> networkStatusLiveData;
 
   public PopularMoviesViewModel() {
+    MyApplication.getInstance().getAppComponent().inject(this);
 
+    remoteMoviePagedList = new SingleLiveEvent<>();
+    localMoviePagedList = new SingleLiveEvent<>();
+
+    networkStatusLiveData =
+        Transformations.switchMap(moviesDataSourceFactory.getItemLiveDataSource(),
+            PopularMoviesRemoteDataSource::getNetworkState);
   }
 
   void getMovies() {
     if (NetworkUtils.isNetworkConnected(MyApplication.getInstance())) {
-      PopularMoviesDataSourceFactory moviesDataSourceFactory = new PopularMoviesDataSourceFactory();
       moviesDataSourceFactory.getItemLiveDataSource();
 
-      PagedList.Config pageConfig = (new PagedList.Config.Builder())
-          .setEnablePlaceholders(false)
-          .setPageSize(Constants.PAGE_SIZE)
-          .setPrefetchDistance(Constants.PAGE_PRE_FETCH_DISTANCE)
-          .build();
-
-      moviePagedList =
+      remoteMoviePagedList =
           (new LivePagedListBuilder<Long, Movie>(moviesDataSourceFactory, pageConfig)).build();
     } else {
       PopularMoviesLocalDataSource localDataSource = new PopularMoviesLocalDataSource();
-      moviePagedList =
+      localMoviePagedList =
           new LivePagedListBuilder<>(localDataSource.getMovies(), Constants.PAGE_SIZE).build();
     }
   }
 
-  LiveData<PagedList<Movie>> moviePagedList() {
-    return moviePagedList;
+  LiveData<PagedList<Movie>> remoteMoviePagedList() {
+    return remoteMoviePagedList;
   }
 
-  @Override
-  protected void onCleared() {
-    super.onCleared();
+  LiveData<PagedList<Movie>> localMoviePagedList() {
+    return localMoviePagedList;
+  }
+
+  LiveData<NetworkStatus> networkStatusLiveData() {
+    return networkStatusLiveData;
   }
 }

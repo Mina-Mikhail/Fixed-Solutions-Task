@@ -83,6 +83,7 @@
 
       <Button
           android:id="@+id/reload_btn"
+          style="@style/TextMediumFont"
           android:layout_width="wrap_content"
           android:layout_height="48dp"
           android:layout_margin="@dimen/dimen5"
@@ -94,7 +95,6 @@
           android:textColor="@color/white"
           android:textStyle="bold"
           android:visibility="gone"
-          style="@style/TextMediumFont"
           tools:targetApi="lollipop"
           />
 
@@ -112,9 +112,21 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:clipToPadding="false"
         android:padding="@dimen/dimen10"
+        />
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        android:id="@+id/list_progress_bar"
+        style="@style/SpinKitView.Large.Wave"
+        android:layout_width="@dimen/dimen50"
+        android:layout_height="@dimen/dimen50"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/text_size12"
+        android:visibility="gone"
+        app:SpinKit_Color="@color/colorAccent"
         />
 
   </LinearLayout>

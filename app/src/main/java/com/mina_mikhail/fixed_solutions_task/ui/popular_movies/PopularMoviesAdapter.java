@@ -25,7 +25,7 @@ public class PopularMoviesAdapter
 
     @Override
     public boolean areContentsTheSame(@NonNull Movie oldItem, @NonNull Movie newItem) {
-      return oldItem.getId() == newItem.getId();
+      return areItemsTheSame(oldItem, newItem);
     }
   };
 

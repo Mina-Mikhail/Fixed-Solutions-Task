@@ -94,6 +94,10 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     mActivity.onApiFail();
   }
 
+  public void onNoInternet() {
+    mActivity.onNoInternet();
+  }
+
   public void onError(String message) {
     mActivity.onError(message);
   }

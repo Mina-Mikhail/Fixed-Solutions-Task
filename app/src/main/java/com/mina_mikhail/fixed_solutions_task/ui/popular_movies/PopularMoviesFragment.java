@@ -9,6 +9,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import com.mina_mikhail.fixed_solutions_task.BR;
 import com.mina_mikhail.fixed_solutions_task.R;
+import com.mina_mikhail.fixed_solutions_task.data.enums.NetworkState;
 import com.mina_mikhail.fixed_solutions_task.data.model.api.Movie;
 import com.mina_mikhail.fixed_solutions_task.databinding.FragmentPopularMoviesBinding;
 import com.mina_mikhail.fixed_solutions_task.ui.base.BaseFragment;
@@ -116,9 +117,33 @@ public class PopularMoviesFragment
 
   @Override
   protected void setUpObservables() {
-    getViewModel().moviePagedList().observe(this, movies -> {
-      moviesAdapter.submitList(movies);
-      showData();
+    getViewModel().remoteMoviePagedList().observe(this, movies -> moviesAdapter.submitList(movies));
+
+    getViewModel().localMoviePagedList().observe(this, movies -> {
+      if (movies != null && !movies.isEmpty()) {
+        moviesAdapter.submitList(movies);
+        showData();
+      } else {
+        showNoData();
+      }
+    });
+
+    getViewModel().networkStatusLiveData().observe(this, networkStatus -> {
+      if (networkStatus != null) {
+        if (networkStatus.getState() == NetworkState.LOADING) {
+          showListProgress();
+        } else if (networkStatus.getState() == NetworkState.LOADED) {
+          showData();
+        } else if (networkStatus.getState() == NetworkState.FAILED) {
+          showNoData();
+        } else if (networkStatus.getState() == NetworkState.NO_INTERNET) {
+          if (moviesAdapter.getCurrentList() != null && !moviesAdapter.getCurrentList().isEmpty()) {
+            onNoInternet();
+          } else {
+            showNoInternet();
+          }
+        }
+      }
     });
   }
 
@@ -134,6 +159,14 @@ public class PopularMoviesFragment
     getViewDataBinding().includedList.recyclerView.setVisibility(View.VISIBLE);
     getViewDataBinding().includedList.container.setVisibility(View.GONE);
     getViewDataBinding().includedList.progressBar.setVisibility(View.GONE);
+    getViewDataBinding().includedList.listProgressBar.setVisibility(View.GONE);
+  }
+
+  private void showListProgress() {
+    getViewDataBinding().includedList.recyclerView.setVisibility(View.VISIBLE);
+    getViewDataBinding().includedList.container.setVisibility(View.GONE);
+    getViewDataBinding().includedList.progressBar.setVisibility(View.GONE);
+    getViewDataBinding().includedList.listProgressBar.setVisibility(View.VISIBLE);
   }
 
   private void showNoData() {
@@ -143,6 +176,7 @@ public class PopularMoviesFragment
     getViewDataBinding().includedList.internetErrorViewContainer.setVisibility(View.GONE);
     getViewDataBinding().includedList.reloadBtn.setVisibility(View.GONE);
     getViewDataBinding().includedList.container.setVisibility(View.VISIBLE);
+    getViewDataBinding().includedList.listProgressBar.setVisibility(View.GONE);
   }
 
   private void showProgress() {
@@ -152,6 +186,7 @@ public class PopularMoviesFragment
     getViewDataBinding().includedList.internetErrorViewContainer.setVisibility(View.GONE);
     getViewDataBinding().includedList.reloadBtn.setVisibility(View.GONE);
     getViewDataBinding().includedList.container.setVisibility(View.VISIBLE);
+    getViewDataBinding().includedList.listProgressBar.setVisibility(View.GONE);
   }
 
   private void showNoInternet() {
@@ -161,5 +196,6 @@ public class PopularMoviesFragment
     getViewDataBinding().includedList.internetErrorViewContainer.setVisibility(View.VISIBLE);
     getViewDataBinding().includedList.reloadBtn.setVisibility(View.VISIBLE);
     getViewDataBinding().includedList.container.setVisibility(View.VISIBLE);
+    getViewDataBinding().includedList.listProgressBar.setVisibility(View.GONE);
   }
 }

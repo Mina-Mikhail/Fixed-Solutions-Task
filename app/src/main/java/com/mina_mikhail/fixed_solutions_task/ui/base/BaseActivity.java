@@ -65,10 +65,14 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     if (NetworkUtils.isNetworkConnected(getApplicationContext())) {
       showMessage(getResources().getString(R.string.try_again));
     } else {
-      Sneaker.with(this)
-          .setMessage(getApplicationContext().getResources().getString(R.string.no_internet))
-          .sneakError();
+      onNoInternet();
     }
+  }
+
+  public void onNoInternet() {
+    Sneaker.with(this)
+        .setMessage(getApplicationContext().getResources().getString(R.string.no_internet))
+        .sneakError();
   }
 
   private void showSnackBar(String message) {
