@@ -88,7 +88,11 @@ public class Movie {
   }
 
   public String getOriginal_language() {
-    return original_language.toUpperCase();
+    if (original_language != null && !original_language.isEmpty()) {
+      return original_language.toUpperCase();
+    } else {
+      return "";
+    }
   }
 
   public void setOriginal_language(String original_language) {

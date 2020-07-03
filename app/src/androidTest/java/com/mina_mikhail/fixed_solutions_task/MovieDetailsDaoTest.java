@@ -2,7 +2,7 @@ package com.mina_mikhail.fixed_solutions_task;
 
 import android.content.Context;
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
-import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.room.Room;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -47,10 +47,16 @@ public class MovieDetailsDaoTest {
 
     movieDetailsDao.insert(movieDetails);
 
-    LiveData<MovieDetails> retrieveSubjects = movieDetailsDao.getMovie(movieID);
-    retrieveSubjects.observeForever(subjectEntities -> {
-      assertEquals(subjectEntities.getTitle(), movieName);
-    });
+    // Assert
+    movieDetailsDao.getMovie(movieID)
+        .observeForever(new Observer<MovieDetails>() {
+          @Override
+          public void onChanged(MovieDetails movieDetails) {
+            assertEquals(movieDetails.getId(), movieID);
+            assertEquals(movieDetails.getTitle(), movieName);
+            movieDetailsDao.getMovie(movieID).removeObserver(this);
+          }
+        });
   }
 
   @After

@@ -1,23 +1,31 @@
 package com.mina_mikhail.fixed_solutions_task;
 
 import android.content.Context;
+import androidx.annotation.Nullable;
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.paging.LivePagedListBuilder;
+import androidx.paging.PagedList;
 import androidx.room.Room;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import com.mina_mikhail.fixed_solutions_task.data.model.api.Movie;
 import com.mina_mikhail.fixed_solutions_task.data.source.local.dp.AppDatabase;
 import com.mina_mikhail.fixed_solutions_task.data.source.local.dp.dao.PopularMoviesDao;
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
-public class MoviesDaoTest {
+public class PopularMoviesDaoTest {
+
+  @Rule
+  public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
   private Context instrumentationContext;
 
@@ -33,25 +41,29 @@ public class MoviesDaoTest {
   }
 
   @Test
-  public void movieCanBeRetrievedAfterInsert() {
-    // Clear table
-    moviesDao.clearTable();
+  public void insertMovie() {
+    int movieID = 707;
+    String movieName = "Spider Man";
 
-    // Insert Movie
     Movie movie = new Movie();
-    movie.setId(70707);
+    movie.setId(movieID);
+    movie.setTitle(movieName);
 
-    // Retrieve movies
-    List<Movie> movies = new ArrayList<>();
-    //try {
-    //  movies = LiveDataTestUtil.getValue(moviesDao.getPopularMovies());
-    //} catch (InterruptedException e) {
-    //  e.printStackTrace();
-    //}
+    moviesDao.insert(movie);
 
-    // Check test result
-    assertEquals(2, 1 + 1);
-    //  assertEquals(70707, movies.get(0).getId());
+    final LiveData<PagedList<Movie>>
+        movies = new LivePagedListBuilder<>(moviesDao.getMovies(), 20).build();
+
+    // Assert
+    movies.observeForever(new Observer<PagedList<Movie>>() {
+      @Override
+      public void onChanged(@Nullable PagedList<Movie> movie) {
+        assertEquals(movie.get(0).getId(), movieID);
+        assertEquals(movie.get(0).getTitle(), movieName);
+        movies.removeObserver(this);
+      }
+    });
+
   }
 
   @After

@@ -23,8 +23,16 @@ public class MovieDetailsRepository {
       System.out.println("call------>> " + this);
       return remoteDataSource.getMovieDetails(movieID);
     } else {
-      return localDataSource.getMovieDetails(movieID);
+      return getMovieDetailsFromLocal(movieID);
     }
+  }
+
+  public void insertMovieDetailsToLocal(MovieDetails movieDetails) {
+    localDataSource.insertMovie(movieDetails);
+  }
+
+  public RemoteDataSource<MovieDetails> getMovieDetailsFromLocal(int movieID) {
+    return localDataSource.getMovieDetails(movieID);
   }
 
   public void destroyInstance(int movieID) {
