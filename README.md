@@ -40,7 +40,7 @@ I have used MVVM to build my project.<br />
 - [x]  Use Android Navigation Component Library.<br />
 - [x]  Use AndroidX.<br />
 - [x]  Infinite Scrolling with Paging Library.<br />
-- [ ]  Apply some Unit Tests.<br />
+- [x]  Apply some Unit Tests.<br />
 - [ ]  Kotlin Version (will be in a separate branch).<br />
 
 ## License

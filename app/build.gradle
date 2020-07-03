@@ -114,6 +114,7 @@ dependencies {
   testImplementation "junit:junit:$junit"
   androidTestImplementation "androidx.test.ext:junit:$junit_ext"
   androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
+  androidTestImplementation "androidx.arch.core:core-testing:$core_testing"
 }
 
 // Logger out test results to console
