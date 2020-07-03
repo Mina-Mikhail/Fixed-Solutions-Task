@@ -93,7 +93,7 @@ public class MovieDetailsFragment
   protected void setUpObservables() {
     getViewModel().getMovieDetailsData().getNetworkState().observe(this, state -> {
       if (state != null) {
-        if (state == NetworkState.LOADED) {
+        if (state == NetworkState.LOADED_FROM_REMOTE || state == NetworkState.LOADED_FROM_LOCAL) {
           if (getViewModel().getMovieDetailsData().getData() != null) {
             getViewDataBinding().setMovie(getViewModel().getMovieDetailsData().getData());
             getViewDataBinding().rateAmount

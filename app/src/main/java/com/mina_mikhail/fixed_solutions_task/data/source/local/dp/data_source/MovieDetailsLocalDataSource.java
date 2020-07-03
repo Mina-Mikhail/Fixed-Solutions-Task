@@ -31,7 +31,7 @@ public class MovieDetailsLocalDataSource {
   public RemoteDataSource<MovieDetails> getMovieDetails(int movieID) {
     localMovieDetailsObserver = movie -> {
       if (movie != null && movie.getId() != 0) {
-        data.setIsLoaded(movie,
+        data.setIsLoadedFromLocal(movie,
             MyApplication.getInstance().getString(R.string.success_local_load_details));
       } else {
         data.setFailed("");

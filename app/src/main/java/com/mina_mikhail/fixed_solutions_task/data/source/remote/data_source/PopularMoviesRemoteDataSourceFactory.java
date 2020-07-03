@@ -4,12 +4,12 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.paging.DataSource;
 import org.jetbrains.annotations.NotNull;
 
-public class PopularMoviesDataSourceFactory
+public class PopularMoviesRemoteDataSourceFactory
     extends DataSource.Factory {
 
   private MutableLiveData<PopularMoviesRemoteDataSource> itemLiveDataSource;
 
-  public PopularMoviesDataSourceFactory() {
+  public PopularMoviesRemoteDataSourceFactory() {
     itemLiveDataSource = new MutableLiveData<>();
   }
 

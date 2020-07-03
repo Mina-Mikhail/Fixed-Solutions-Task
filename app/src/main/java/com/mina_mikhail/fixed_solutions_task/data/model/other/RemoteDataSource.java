@@ -26,13 +26,23 @@ public class RemoteDataSource<T> {
     networkState.postValue(NetworkState.LOADING);
   }
 
-  public void setIsLoaded(T data) {
-    networkState.postValue(NetworkState.LOADED);
+  public void setIsLoadedFromRemote(T data) {
+    networkState.postValue(NetworkState.LOADED_FROM_REMOTE);
     this.data = data;
   }
 
-  public void setIsLoaded(T data, String message) {
-    networkState.postValue(NetworkState.LOADED);
+  public void setData(T data) {
+    this.data = data;
+  }
+
+  public void setIsLoadedFromRemote(T data, String message) {
+    networkState.postValue(NetworkState.LOADED_FROM_REMOTE);
+    this.data = data;
+    this.message = message;
+  }
+
+  public void setIsLoadedFromLocal(T data, String message) {
+    networkState.postValue(NetworkState.LOADED_FROM_LOCAL);
     this.data = data;
     this.message = message;
   }
@@ -40,6 +50,10 @@ public class RemoteDataSource<T> {
   public void setFailed(@NonNull String errorMessage) {
     this.message = errorMessage;
     networkState.postValue(NetworkState.FAILED);
+  }
+
+  public void setNetworkState(int state) {
+    networkState.postValue(state);
   }
 
   public void setNoInternet() {

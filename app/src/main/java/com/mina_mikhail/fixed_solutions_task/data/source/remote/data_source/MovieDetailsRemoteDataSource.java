@@ -41,7 +41,7 @@ public class MovieDetailsRemoteDataSource {
 
                 saveMovieToLocal(moviesDetails);
 
-                data.setIsLoaded(moviesDetails,
+                data.setIsLoadedFromRemote(moviesDetails,
                     MyApplication.getInstance().getString(R.string.success_remote_load_details));
               }
 

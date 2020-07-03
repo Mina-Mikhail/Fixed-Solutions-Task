@@ -107,41 +107,45 @@ public class PopularMoviesFragment
     moviesAdapter = new PopularMoviesAdapter();
     moviesAdapter.setHasStableIds(true);
     getViewDataBinding().includedList.recyclerView.setAdapter(moviesAdapter);
-    getViewDataBinding().includedList.reloadBtn.setOnClickListener(v -> getData());
   }
 
   private void getData() {
     showProgress();
-    getViewModel().getMovies();
+    getViewModel().getPopularMovies();
   }
 
   @Override
   protected void setUpObservables() {
-    getViewModel().remoteMoviePagedList().observe(this, movies -> moviesAdapter.submitList(movies));
-
-    getViewModel().localMoviePagedList().observe(this, movies -> {
-      if (movies != null && !movies.isEmpty()) {
-        moviesAdapter.submitList(movies);
-        showData();
-      } else {
-        showNoData();
-      }
-    });
-
-    getViewModel().networkStatusLiveData().observe(this, networkStatus -> {
-      if (networkStatus != null) {
-        if (networkStatus.getState() == NetworkState.LOADING) {
-          showListProgress();
-        } else if (networkStatus.getState() == NetworkState.LOADED) {
-          showData();
-        } else if (networkStatus.getState() == NetworkState.FAILED) {
+    getViewModel().getPopularMoviesData().getNetworkState().observe(this, state -> {
+      if (state != null) {
+        if (state == NetworkState.LOADED_FROM_REMOTE) {
+          getViewModel().getPopularMoviesData().getData().observe(this,
+              movies -> {
+                showData();
+                moviesAdapter
+                    .submitList(getViewModel().getPopularMoviesData().getData().getValue());
+              });
+        } else if (state == NetworkState.LOADED_FROM_LOCAL) {
+          getViewModel().getPopularMoviesData().getData().observe(this,
+              movies -> {
+                if (movies != null && !movies.isEmpty()) {
+                  showData();
+                  moviesAdapter
+                      .submitList(getViewModel().getPopularMoviesData().getData().getValue());
+                } else {
+                  showNoData();
+                }
+              });
+        } else if (state == NetworkState.FAILED) {
           showNoData();
-        } else if (networkStatus.getState() == NetworkState.NO_INTERNET) {
+        } else if (state == NetworkState.NO_INTERNET) {
           if (moviesAdapter.getCurrentList() != null && !moviesAdapter.getCurrentList().isEmpty()) {
             onNoInternet();
           } else {
             showNoInternet();
           }
+        } else if (state == NetworkState.LOADING) {
+          showListProgress();
         }
       }
     });
@@ -174,7 +178,6 @@ public class PopularMoviesFragment
     getViewDataBinding().includedList.progressBar.setVisibility(View.GONE);
     getViewDataBinding().includedList.emptyViewContainer.setVisibility(View.VISIBLE);
     getViewDataBinding().includedList.internetErrorViewContainer.setVisibility(View.GONE);
-    getViewDataBinding().includedList.reloadBtn.setVisibility(View.GONE);
     getViewDataBinding().includedList.container.setVisibility(View.VISIBLE);
     getViewDataBinding().includedList.listProgressBar.setVisibility(View.GONE);
   }
@@ -184,7 +187,6 @@ public class PopularMoviesFragment
     getViewDataBinding().includedList.progressBar.setVisibility(View.VISIBLE);
     getViewDataBinding().includedList.emptyViewContainer.setVisibility(View.GONE);
     getViewDataBinding().includedList.internetErrorViewContainer.setVisibility(View.GONE);
-    getViewDataBinding().includedList.reloadBtn.setVisibility(View.GONE);
     getViewDataBinding().includedList.container.setVisibility(View.VISIBLE);
     getViewDataBinding().includedList.listProgressBar.setVisibility(View.GONE);
   }
@@ -194,7 +196,6 @@ public class PopularMoviesFragment
     getViewDataBinding().includedList.progressBar.setVisibility(View.GONE);
     getViewDataBinding().includedList.emptyViewContainer.setVisibility(View.GONE);
     getViewDataBinding().includedList.internetErrorViewContainer.setVisibility(View.VISIBLE);
-    getViewDataBinding().includedList.reloadBtn.setVisibility(View.VISIBLE);
     getViewDataBinding().includedList.container.setVisibility(View.VISIBLE);
     getViewDataBinding().includedList.listProgressBar.setVisibility(View.GONE);
   }

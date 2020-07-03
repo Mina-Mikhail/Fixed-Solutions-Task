@@ -6,9 +6,7 @@ import dagger.Component;
 import javax.inject.Singleton;
 
 @Singleton
-@Component(modules = {
-    MyApplicationModule.class, RepositoryModule.class, DataSourceFactoryModule.class
-})
+@Component(modules = { MyApplicationModule.class, RepositoryModule.class })
 public interface AppComponent {
 
   // Popular Movies

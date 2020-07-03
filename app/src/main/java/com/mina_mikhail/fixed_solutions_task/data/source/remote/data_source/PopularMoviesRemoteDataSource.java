@@ -47,7 +47,7 @@ public class PopularMoviesRemoteDataSource
                   && moviesResponse.getResults() != null
                   && !moviesResponse.getResults().isEmpty()) {
 
-                networkState.postValue(new NetworkStatus(NetworkState.LOADED, ""));
+                networkState.postValue(new NetworkStatus(NetworkState.LOADED_FROM_REMOTE, ""));
 
                 callback.onResult(moviesResponse.getResults(), null, (long) 2);
 
@@ -97,7 +97,7 @@ public class PopularMoviesRemoteDataSource
                   && moviesResponse.getResults() != null
                   && !moviesResponse.getResults().isEmpty()) {
 
-                networkState.postValue(new NetworkStatus(NetworkState.LOADED, ""));
+                networkState.postValue(new NetworkStatus(NetworkState.LOADED_FROM_REMOTE, ""));
 
                 long nextPage =
                     (params.key == moviesResponse.getTotal_pages()) ? null : params.key + 1;

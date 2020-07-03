@@ -44,7 +44,7 @@ public class MoviesDaoTest {
     // Retrieve movies
     List<Movie> movies = new ArrayList<>();
     //try {
-    //  movies = LiveDataTestUtil.getValue(moviesDao.getMovies());
+    //  movies = LiveDataTestUtil.getValue(moviesDao.getPopularMovies());
     //} catch (InterruptedException e) {
     //  e.printStackTrace();
     //}
