@@ -41,14 +41,14 @@ public class MovieDetailsRepositoryTest {
     movieDetailsRepository.insertMovieDetailsToLocal(movieDetails);
 
     // Assert
-    movieDetailsRepository.getMovieDetailsFromLocal((movieID)).getNetworkState().observeForever(
+    movieDetailsRepository.getMovieDetails((movieID)).getNetworkState().observeForever(
         new Observer<Integer>() {
           @Override public void onChanged(Integer state) {
             if (state == NetworkState.LOADED_FROM_LOCAL) {
-              MovieDetails movieDetails1 =
+              MovieDetails localMovieDetails =
                   movieDetailsRepository.getMovieDetailsFromLocal((movieID)).getData();
-              assertEquals(movieDetails1.getId(), movieID);
-              assertEquals(movieDetails1.getTitle(), movieName);
+              assertEquals(localMovieDetails.getId(), movieID);
+              assertEquals(localMovieDetails.getTitle(), movieName);
 
               movieDetailsRepository.getMovieDetailsFromLocal((movieID)).getNetworkState()
                   .removeObserver(this);

@@ -20,7 +20,6 @@ public class MovieDetailsRepository {
 
   public RemoteDataSource<MovieDetails> getMovieDetails(int movieID) {
     if (NetworkUtils.isNetworkConnected(MyApplication.getInstance())) {
-      System.out.println("call------>> " + this);
       return remoteDataSource.getMovieDetails(movieID);
     } else {
       return getMovieDetailsFromLocal(movieID);
