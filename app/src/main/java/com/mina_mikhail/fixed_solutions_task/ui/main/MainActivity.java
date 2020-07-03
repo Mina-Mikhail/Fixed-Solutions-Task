@@ -2,7 +2,7 @@ package com.mina_mikhail.fixed_solutions_task.ui.main;
 
 import android.app.Activity;
 import android.content.Intent;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import com.mina_mikhail.fixed_solutions_task.BR;
 import com.mina_mikhail.fixed_solutions_task.R;
 import com.mina_mikhail.fixed_solutions_task.databinding.ActivityMainBinding;
@@ -35,7 +35,7 @@ public class MainActivity
 
   @Override
   protected void setUpViewModel() {
-    mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+    mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
     getViewDataBinding().setViewModel(getViewModel());
     initBaseObservables();
   }
