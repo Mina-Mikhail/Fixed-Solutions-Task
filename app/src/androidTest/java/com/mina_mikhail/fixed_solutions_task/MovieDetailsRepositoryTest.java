@@ -44,7 +44,8 @@ public class MovieDetailsRepositoryTest {
     movieDetailsRepository.getMovieDetails((movieID)).getNetworkState().observeForever(
         new Observer<Integer>() {
           @Override public void onChanged(Integer state) {
-            if (state == NetworkState.LOADED_FROM_LOCAL) {
+            if (state == NetworkState.LOADED_FROM_LOCAL
+                || state == NetworkState.LOADED_FROM_REMOTE) {
               MovieDetails localMovieDetails =
                   movieDetailsRepository.getMovieDetailsFromLocal((movieID)).getData();
               assertEquals(localMovieDetails.getId(), movieID);
