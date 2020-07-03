@@ -45,9 +45,6 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     mRootView = mViewDataBinding.getRoot();
     setHasOptionsMenu(hasOptionMenu());
 
-    // To solve issue when replace fragment, the old fragment views still clickable and take actions but not visible
-    mRootView.setOnTouchListener((v, event) -> true);
-
     return mRootView;
   }
 
