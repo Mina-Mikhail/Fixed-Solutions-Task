@@ -12,6 +12,8 @@ import androidx.annotation.StringRes;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import com.mina_mikhail.fixed_solutions_task.utils.DisplayLoader;
 import com.mina_mikhail.fixed_solutions_task.utils.display_message.DisplayMessage;
 import com.mina_mikhail.fixed_solutions_task.utils.display_message.MessageType;
@@ -23,6 +25,8 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
   private View mRootView;
   private T mViewDataBinding;
   private V mViewModel;
+  private NavController navController;
+  private boolean hasInitializedRootView = false;
 
   @Override
   public void onAttach(Context context) {
@@ -41,9 +45,13 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    mViewDataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
-    mRootView = mViewDataBinding.getRoot();
-    setHasOptionsMenu(hasOptionMenu());
+
+    if (mRootView == null) {
+      mViewDataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
+      mRootView = mViewDataBinding.getRoot();
+      mViewDataBinding.setLifecycleOwner(this);
+      setHasOptionsMenu(hasOptionMenu());
+    }
 
     return mRootView;
   }
@@ -54,20 +62,25 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     mViewDataBinding.setVariable(getBindingVariable(), mViewModel);
     mViewDataBinding.executePendingBindings();
 
-    setUpViewModel();
-    setUpViews();
-    setUpObservables();
+    if (!hasInitializedRootView) {
+      setUpViewModel();
+      setUpViews();
+      setUpObservables();
+      navController = Navigation.findNavController(view);
+
+      hasInitializedRootView = true;
+    }
   }
 
-  public BaseActivity getBaseActivity() {
+  protected BaseActivity getBaseActivity() {
     return mActivity;
   }
 
-  public T getViewDataBinding() {
+  protected T getViewDataBinding() {
     return mViewDataBinding;
   }
 
-  public void hideKeyboard() {
+  protected void hideKeyboard() {
     if (mActivity != null) {
       mActivity.hideKeyboard();
     }
@@ -87,35 +100,39 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     initHideKeyboardObservable();
   }
 
-  public void onApiFail() {
+  protected NavController getNavController() {
+    return navController;
+  }
+
+  protected void onApiFail() {
     mActivity.onApiFail();
   }
 
-  public void onNoInternet() {
+  protected void onNoInternet() {
     mActivity.onNoInternet();
   }
 
-  public void onError(String message) {
+  protected void onError(String message) {
     mActivity.onError(message);
   }
 
-  public void onError(@StringRes int resId) {
+  protected void onError(@StringRes int resId) {
     mActivity.onError(resId);
   }
 
-  public void showMessage(String message) {
+  protected void showMessage(String message) {
     mActivity.showMessage(message);
   }
 
-  public void showMessage(@StringRes int resId) {
+  protected void showMessage(@StringRes int resId) {
     mActivity.showMessage(resId);
   }
 
-  public void showLoading() {
+  protected void showLoading() {
     mActivity.showLoading();
   }
 
-  public void hideLoading() {
+  protected void hideLoading() {
     mActivity.hideLoading();
   }
 

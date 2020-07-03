@@ -2,11 +2,8 @@ package com.mina_mikhail.fixed_solutions_task.ui.popular_movies;
 
 import android.os.Bundle;
 import android.view.View;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import com.mina_mikhail.fixed_solutions_task.BR;
 import com.mina_mikhail.fixed_solutions_task.R;
 import com.mina_mikhail.fixed_solutions_task.data.enums.NetworkState;
@@ -20,7 +17,7 @@ public class PopularMoviesFragment
     implements PopularMoviesAdapter.MoviesListener {
 
   private PopularMoviesViewModel mViewModel;
-  private NavController navController;
+
 
   private PopularMoviesAdapter moviesAdapter;
 
@@ -49,13 +46,6 @@ public class PopularMoviesFragment
     mViewModel = new ViewModelProvider(this).get(PopularMoviesViewModel.class);
     getViewDataBinding().setViewModel(getViewModel());
     initBaseObservables();
-  }
-
-  @Override
-  public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
-
-    navController = Navigation.findNavController(view);
   }
 
   @Override
@@ -156,7 +146,7 @@ public class PopularMoviesFragment
     PopularMoviesFragmentDirections.ActionNext nextAction =
         PopularMoviesFragmentDirections.actionNext();
     nextAction.setMovieId(movie.getId());
-    navController.navigate(nextAction);
+    getNavController().navigate(nextAction);
   }
 
   private void showData() {

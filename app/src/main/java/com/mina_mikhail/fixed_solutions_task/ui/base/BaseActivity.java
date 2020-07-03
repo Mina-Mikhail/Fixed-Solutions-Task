@@ -58,6 +58,7 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
       this.mViewModel = mViewModel == null ? getViewModel() : mViewModel;
       mViewDataBinding.setVariable(getBindingVariable(), mViewModel);
       mViewDataBinding.executePendingBindings();
+      mViewDataBinding.setLifecycleOwner(this);
     }
   }
 
