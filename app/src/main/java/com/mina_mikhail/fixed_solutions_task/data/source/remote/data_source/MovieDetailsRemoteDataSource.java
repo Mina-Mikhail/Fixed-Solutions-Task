@@ -4,7 +4,7 @@ import com.mina_mikhail.fixed_solutions_task.R;
 import com.mina_mikhail.fixed_solutions_task.data.model.api.MovieDetails;
 import com.mina_mikhail.fixed_solutions_task.data.model.other.RemoteDataSource;
 import com.mina_mikhail.fixed_solutions_task.data.source.local.dp.data_source.MovieDetailsLocalDataSource;
-import com.mina_mikhail.fixed_solutions_task.data.source.remote.ApiInterface;
+import com.mina_mikhail.fixed_solutions_task.data.source.remote.MoviesService;
 import com.mina_mikhail.fixed_solutions_task.utils.NetworkUtils;
 import com.mina_mikhail.fixed_solutions_task.utils.ResourceProvider;
 import com.uber.autodispose.ScopeProvider;
@@ -21,17 +21,17 @@ public class MovieDetailsRemoteDataSource {
   private CompositeDisposable disposable;
   private RemoteDataSource<MovieDetails> data;
 
-  private ApiInterface apiInterface;
+  private MoviesService moviesService;
   private MovieDetailsLocalDataSource localDataSource;
   private ResourceProvider resourceProvider;
   private NetworkUtils networkUtils;
 
   @Inject
-  public MovieDetailsRemoteDataSource(ApiInterface apiInterface
+  public MovieDetailsRemoteDataSource(MoviesService moviesService
       , MovieDetailsLocalDataSource localDataSource
       , ResourceProvider resourceProvider
       , NetworkUtils networkUtils) {
-    this.apiInterface = apiInterface;
+    this.moviesService = moviesService;
     this.localDataSource = localDataSource;
     this.resourceProvider = resourceProvider;
     this.networkUtils = networkUtils;
@@ -42,7 +42,7 @@ public class MovieDetailsRemoteDataSource {
 
   public RemoteDataSource<MovieDetails> getMovieDetails(int movieID) {
     data.setIsLoading();
-    disposable.add(apiInterface.getMovieDetails(movieID)
+    disposable.add(moviesService.getMovieDetails(movieID)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .as(autoDisposable(ScopeProvider.UNBOUND))

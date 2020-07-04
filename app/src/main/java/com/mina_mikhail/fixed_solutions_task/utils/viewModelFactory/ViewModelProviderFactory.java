@@ -7,9 +7,11 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.inject.Singleton;
+import org.jetbrains.annotations.NotNull;
 
 @Singleton
-public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFactory {
+public class ViewModelProviderFactory
+    extends ViewModelProvider.NewInstanceFactory {
 
   private final Map<Class<? extends ViewModel>, Provider<ViewModel>> creators;
 
@@ -18,8 +20,9 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
     this.creators = creators;
   }
 
+  @NotNull
   @Override
-  public <T extends ViewModel> T create(Class<T> modelClass) {
+  public <T extends ViewModel> T create(@NotNull Class<T> modelClass) {
     Provider<? extends ViewModel> creator = creators.get(modelClass);
     if (creator == null) {
       for (Map.Entry<Class<? extends ViewModel>, Provider<ViewModel>> entry : creators.entrySet()) {

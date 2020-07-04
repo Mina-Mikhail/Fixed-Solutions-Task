@@ -1,6 +1,6 @@
 package com.mina_mikhail.fixed_solutions_task.di.module;
 
-import com.mina_mikhail.fixed_solutions_task.data.source.remote.ApiInterface;
+import com.mina_mikhail.fixed_solutions_task.data.source.remote.MoviesService;
 import dagger.Module;
 import dagger.Provides;
 import javax.inject.Singleton;
@@ -11,7 +11,7 @@ public class NetworkServiceModule {
 
   @Singleton
   @Provides
-  ApiInterface provideApiInterface(Retrofit retrofit) {
-    return retrofit.create(ApiInterface.class);
+  MoviesService provideMoviesService(Retrofit retrofit) {
+    return retrofit.create(MoviesService.class);
   }
 }

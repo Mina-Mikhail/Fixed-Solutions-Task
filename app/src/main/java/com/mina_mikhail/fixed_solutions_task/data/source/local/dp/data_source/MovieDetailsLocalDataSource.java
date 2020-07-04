@@ -1,6 +1,5 @@
 package com.mina_mikhail.fixed_solutions_task.data.source.local.dp.data_source;
 
-import androidx.lifecycle.Observer;
 import com.mina_mikhail.fixed_solutions_task.R;
 import com.mina_mikhail.fixed_solutions_task.data.model.api.MovieDetails;
 import com.mina_mikhail.fixed_solutions_task.data.model.other.RemoteDataSource;
@@ -10,7 +9,9 @@ import com.uber.autodispose.ScopeProvider;
 import io.reactivex.Completable;
 import io.reactivex.CompletableObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import javax.inject.Inject;
 
@@ -21,7 +22,8 @@ public class MovieDetailsLocalDataSource {
   private MovieDetailsDao movieDetailsDao;
   private ResourceProvider resourceProvider;
   private RemoteDataSource<MovieDetails> data;
-  private Observer<MovieDetails> localMovieDetailsObserver;
+
+  private CompositeDisposable disposable;
 
   @Inject
   public MovieDetailsLocalDataSource(MovieDetailsDao movieDetailsDao
@@ -30,18 +32,34 @@ public class MovieDetailsLocalDataSource {
     this.resourceProvider = resourceProvider;
 
     data = new RemoteDataSource<>();
+    disposable = new CompositeDisposable();
   }
 
   public RemoteDataSource<MovieDetails> getMovieDetails(int movieID) {
-    localMovieDetailsObserver = movie -> {
-      if (movie != null && movie.getId() != 0) {
-        data.setIsLoadedFromLocal(movie,
-            resourceProvider.getString(R.string.success_local_load_details));
-      } else {
-        data.setFailed("");
-      }
-    };
-    movieDetailsDao.getMovie(movieID).observeForever(localMovieDetailsObserver);
+    disposable.add(movieDetailsDao.getMovie(movieID)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .as(autoDisposable(ScopeProvider.UNBOUND))
+        .subscribeWith(new DisposableSingleObserver<MovieDetails>() {
+          @Override
+          public void onSuccess(MovieDetails movieDetails) {
+            if (movieDetails == null || movieDetails.getId() == 0) {
+              data.setFailed("");
+            } else {
+              data.setIsLoadedFromLocal(movieDetails,
+                  resourceProvider.getString(R.string.success_local_load_details));
+            }
+
+            dispose();
+          }
+
+          @Override
+          public void onError(Throwable e) {
+            data.setFailed("");
+
+            dispose();
+          }
+        }));
 
     return data;
   }
@@ -93,13 +111,6 @@ public class MovieDetailsLocalDataSource {
             System.out.println("====ERROR-INSERT-MOVIE-DETAILS==>> " + e.getMessage());
           }
         });
-  }
-
-  public void unRegisterObservers(int movieID) {
-    if (localMovieDetailsObserver != null) {
-      movieDetailsDao.getMovie(movieID).removeObserver(localMovieDetailsObserver);
-      localMovieDetailsObserver = null;
-    }
   }
 
   public interface ClearLocalDataCallback {

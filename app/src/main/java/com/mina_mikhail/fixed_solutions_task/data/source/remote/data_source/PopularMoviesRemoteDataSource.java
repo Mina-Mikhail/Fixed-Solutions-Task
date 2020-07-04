@@ -6,7 +6,7 @@ import androidx.paging.PageKeyedDataSource;
 import com.mina_mikhail.fixed_solutions_task.data.enums.NetworkState;
 import com.mina_mikhail.fixed_solutions_task.data.model.api.Movie;
 import com.mina_mikhail.fixed_solutions_task.data.source.local.dp.data_source.PopularMoviesLocalDataSource;
-import com.mina_mikhail.fixed_solutions_task.data.source.remote.ApiInterface;
+import com.mina_mikhail.fixed_solutions_task.data.source.remote.MoviesService;
 import com.mina_mikhail.fixed_solutions_task.data.source.remote.response.PopularMoviesResponse;
 import com.mina_mikhail.fixed_solutions_task.utils.NetworkStatus;
 import com.mina_mikhail.fixed_solutions_task.utils.NetworkUtils;
@@ -25,7 +25,7 @@ public class PopularMoviesRemoteDataSource
 
   private MutableLiveData<NetworkStatus> networkState;
   private CompositeDisposable disposable;
-  private ApiInterface apiInterface;
+  private MoviesService moviesService;
   private PopularMoviesLocalDataSource localDataSource;
   private NetworkUtils networkUtils;
 
@@ -33,11 +33,11 @@ public class PopularMoviesRemoteDataSource
   private int firstPage = 1;
 
   @Inject
-  public PopularMoviesRemoteDataSource(ApiInterface apiInterface
+  public PopularMoviesRemoteDataSource(MoviesService moviesService
       , PopularMoviesLocalDataSource localDataSource
       , NetworkUtils networkUtils) {
     this.networkUtils = networkUtils;
-    this.apiInterface = apiInterface;
+    this.moviesService = moviesService;
     this.localDataSource = localDataSource;
     networkState = new MutableLiveData<>();
     disposable = new CompositeDisposable();
@@ -50,7 +50,7 @@ public class PopularMoviesRemoteDataSource
   @Override
   public void loadInitial(@NonNull LoadInitialParams<Long> params
       , @NonNull final LoadInitialCallback<Long, Movie> callback) {
-    disposable.add(apiInterface.getMovies(sortType, firstPage)
+    disposable.add(moviesService.getMovies(sortType, firstPage)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .as(autoDisposable(ScopeProvider.UNBOUND))
@@ -100,7 +100,7 @@ public class PopularMoviesRemoteDataSource
   public void loadAfter(@NonNull final LoadParams<Long> params
       , @NonNull final LoadCallback<Long, Movie> callback) {
     networkState.postValue(new NetworkStatus(NetworkState.LOADING, ""));
-    disposable.add(apiInterface.getMovies(sortType, params.key)
+    disposable.add(moviesService.getMovies(sortType, params.key)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .as(autoDisposable(ScopeProvider.UNBOUND))

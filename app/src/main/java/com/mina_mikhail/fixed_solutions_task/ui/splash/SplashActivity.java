@@ -1,6 +1,7 @@
 package com.mina_mikhail.fixed_solutions_task.ui.splash;
 
 import androidx.lifecycle.ViewModelProvider;
+import com.mina_mikhail.fixed_solutions_task.BR;
 import com.mina_mikhail.fixed_solutions_task.R;
 import com.mina_mikhail.fixed_solutions_task.databinding.ActivitySplashBinding;
 import com.mina_mikhail.fixed_solutions_task.ui.base.BaseActivity;
@@ -13,7 +14,7 @@ public class SplashActivity
 
   @Override
   public int getBindingVariable() {
-    return com.mina_mikhail.fixed_solutions_task.BR.viewModel;
+    return BR.viewModel;
   }
 
   @Override

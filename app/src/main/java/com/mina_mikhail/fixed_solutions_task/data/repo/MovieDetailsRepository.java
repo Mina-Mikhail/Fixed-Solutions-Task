@@ -37,8 +37,4 @@ public class MovieDetailsRepository {
   public RemoteDataSource<MovieDetails> getMovieDetailsFromLocal(int movieID) {
     return localDataSource.getMovieDetails(movieID);
   }
-
-  public void destroyInstance(int movieID) {
-    localDataSource.unRegisterObservers(movieID);
-  }
 }

@@ -11,7 +11,6 @@ import com.mina_mikhail.fixed_solutions_task.di.component.DaggerTestComponent;
 import com.mina_mikhail.fixed_solutions_task.di.component.TestComponent;
 import com.mina_mikhail.fixed_solutions_task.di.module.TestModule;
 import javax.inject.Inject;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -65,10 +64,5 @@ public class MovieDetailsRepositoryTest {
             }
           }
         });
-  }
-
-  @After
-  public void destroyRepository() {
-    movieDetailsRepository.destroyInstance(movieID);
   }
 }

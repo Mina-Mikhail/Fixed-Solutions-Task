@@ -61,10 +61,4 @@ public class MovieDetailsViewModel
   LiveData<List<String>> onBackdropClicked() {
     return onBackdropClicked;
   }
-
-  @Override
-  protected void onCleared() {
-    repository.destroyInstance(movieID);
-    super.onCleared();
-  }
 }

@@ -7,12 +7,12 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-public interface ApiInterface {
+public interface MoviesService {
 
   @GET("discover/movie")
   Single<PopularMoviesResponse> getMovies(@Query("sort_by") String sortBy,
       @Query("page") long pageNumber);
 
-  @GET("movie/{movieID}")
-  Single<MovieDetails> getMovieDetails(@Path("movieID") int movieID);
+  @GET("movie/{movie_id}")
+  Single<MovieDetails> getMovieDetails(@Path("movie_id") int movieID);
 }
