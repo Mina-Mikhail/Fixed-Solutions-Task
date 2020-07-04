@@ -18,7 +18,6 @@ public class PopularMoviesFragment
 
   private PopularMoviesViewModel mViewModel;
 
-
   private PopularMoviesAdapter moviesAdapter;
 
   @Override
@@ -43,7 +42,7 @@ public class PopularMoviesFragment
 
   @Override
   protected void setUpViewModel() {
-    mViewModel = new ViewModelProvider(this).get(PopularMoviesViewModel.class);
+    mViewModel = new ViewModelProvider(this, factory).get(PopularMoviesViewModel.class);
     getViewDataBinding().setViewModel(getViewModel());
     initBaseObservables();
   }

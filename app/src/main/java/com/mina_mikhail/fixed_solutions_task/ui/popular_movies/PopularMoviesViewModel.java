@@ -2,7 +2,6 @@ package com.mina_mikhail.fixed_solutions_task.ui.popular_movies;
 
 import androidx.lifecycle.LiveData;
 import androidx.paging.PagedList;
-import com.mina_mikhail.fixed_solutions_task.app.MyApplication;
 import com.mina_mikhail.fixed_solutions_task.data.model.api.Movie;
 import com.mina_mikhail.fixed_solutions_task.data.model.other.RemoteDataSource;
 import com.mina_mikhail.fixed_solutions_task.data.repo.PopularMoviesRepository;
@@ -12,14 +11,12 @@ import javax.inject.Inject;
 public class PopularMoviesViewModel
     extends BaseViewModel {
 
-  @Inject
-  PopularMoviesRepository moviesRepository;
-
+  private PopularMoviesRepository moviesRepository;
   private RemoteDataSource<LiveData<PagedList<Movie>>> popularMovies;
 
-  public PopularMoviesViewModel() {
-    MyApplication.getInstance().getAppComponent().inject(this);
-
+  @Inject
+  public PopularMoviesViewModel(PopularMoviesRepository moviesRepository) {
+    this.moviesRepository = moviesRepository;
     popularMovies = new RemoteDataSource<>();
   }
 

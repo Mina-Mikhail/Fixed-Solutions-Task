@@ -3,11 +3,14 @@ package com.mina_mikhail.fixed_solutions_task;
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.Observer;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 import com.mina_mikhail.fixed_solutions_task.data.enums.NetworkState;
 import com.mina_mikhail.fixed_solutions_task.data.model.api.MovieDetails;
 import com.mina_mikhail.fixed_solutions_task.data.repo.MovieDetailsRepository;
-import com.mina_mikhail.fixed_solutions_task.data.source.local.dp.data_source.MovieDetailsLocalDataSource;
-import com.mina_mikhail.fixed_solutions_task.data.source.remote.data_source.MovieDetailsRemoteDataSource;
+import com.mina_mikhail.fixed_solutions_task.di.component.DaggerTestComponent;
+import com.mina_mikhail.fixed_solutions_task.di.component.TestComponent;
+import com.mina_mikhail.fixed_solutions_task.di.module.TestModule;
+import javax.inject.Inject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -22,14 +25,20 @@ public class MovieDetailsRepositoryTest {
   @Rule
   public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
-  private MovieDetailsRepository movieDetailsRepository;
   private int movieID = 101;
   private String movieName = "Marvel Avengers";
 
+  @Inject
+  public MovieDetailsRepository movieDetailsRepository;
+
   @Before
-  public void initRepository() {
-    movieDetailsRepository = new MovieDetailsRepository(new MovieDetailsRemoteDataSource(),
-        new MovieDetailsLocalDataSource());
+  public void setUp() {
+    TestComponent testComponent = DaggerTestComponent.builder()
+        .context(InstrumentationRegistry.getInstrumentation().getTargetContext())
+        .testModule(new TestModule())
+        .build();
+
+    testComponent.inject(this);
   }
 
   @Test

@@ -10,7 +10,13 @@ import java.util.List;
 
 public final class NetworkUtils {
 
-  public static boolean isNetworkConnected(Context context) {
+  private Context context;
+
+  public NetworkUtils(Context context) {
+    this.context = context;
+  }
+
+  public boolean isNetworkConnected() {
     ConnectivityManager cm =
         (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
     NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
@@ -23,7 +29,7 @@ public final class NetworkUtils {
    * @param interfaceName eth0, wlan0 or NULL=use first interface
    * @return mac address or empty string
    */
-  public static String getMACAddress(String interfaceName) {
+  public String getMACAddress(String interfaceName) {
     try {
       List<NetworkInterface> interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
       for (NetworkInterface intf : interfaces) {
@@ -54,7 +60,7 @@ public final class NetworkUtils {
    * @param useIPv4 true=return ipv4, false=return ipv6
    * @return address or empty string
    */
-  public static String getIPAddress(boolean useIPv4) {
+  public String getIPAddress(boolean useIPv4) {
     try {
       List<NetworkInterface> interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
       for (NetworkInterface intf : interfaces) {

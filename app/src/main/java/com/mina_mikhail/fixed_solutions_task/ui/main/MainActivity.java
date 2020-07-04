@@ -35,7 +35,7 @@ public class MainActivity
 
   @Override
   protected void setUpViewModel() {
-    mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+    mViewModel = new ViewModelProvider(this, factory).get(MainViewModel.class);
     getViewDataBinding().setViewModel(getViewModel());
     initBaseObservables();
   }

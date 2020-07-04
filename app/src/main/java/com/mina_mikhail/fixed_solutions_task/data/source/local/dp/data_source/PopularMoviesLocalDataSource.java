@@ -1,9 +1,7 @@
 package com.mina_mikhail.fixed_solutions_task.data.source.local.dp.data_source;
 
 import androidx.paging.DataSource;
-import com.mina_mikhail.fixed_solutions_task.app.MyApplication;
 import com.mina_mikhail.fixed_solutions_task.data.model.api.Movie;
-import com.mina_mikhail.fixed_solutions_task.data.source.local.dp.AppDatabase;
 import com.mina_mikhail.fixed_solutions_task.data.source.local.dp.dao.PopularMoviesDao;
 import com.uber.autodispose.ScopeProvider;
 import io.reactivex.Completable;
@@ -12,16 +10,17 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import java.util.List;
+import javax.inject.Inject;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 public class PopularMoviesLocalDataSource {
 
-  private final PopularMoviesDao moviesDao;
+  private PopularMoviesDao moviesDao;
 
-  public PopularMoviesLocalDataSource() {
-    AppDatabase appDatabase = AppDatabase.getInstance(MyApplication.getInstance());
-    moviesDao = appDatabase.getPopularMoviesDao();
+  @Inject
+  public PopularMoviesLocalDataSource(PopularMoviesDao moviesDao) {
+    this.moviesDao = moviesDao;
   }
 
   public DataSource.Factory<Integer, Movie> getMovies() {

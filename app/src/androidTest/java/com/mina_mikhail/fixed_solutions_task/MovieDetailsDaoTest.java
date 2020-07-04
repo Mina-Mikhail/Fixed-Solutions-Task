@@ -1,15 +1,15 @@
 package com.mina_mikhail.fixed_solutions_task;
 
-import android.content.Context;
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.Observer;
-import androidx.room.Room;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import com.mina_mikhail.fixed_solutions_task.data.model.api.MovieDetails;
-import com.mina_mikhail.fixed_solutions_task.data.source.local.dp.AppDatabase;
 import com.mina_mikhail.fixed_solutions_task.data.source.local.dp.dao.MovieDetailsDao;
-import org.junit.After;
+import com.mina_mikhail.fixed_solutions_task.di.component.DaggerTestComponent;
+import com.mina_mikhail.fixed_solutions_task.di.component.TestComponent;
+import com.mina_mikhail.fixed_solutions_task.di.module.TestModule;
+import javax.inject.Inject;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -23,17 +23,17 @@ public class MovieDetailsDaoTest {
   @Rule
   public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
-  private Context instrumentationContext;
-
-  private AppDatabase appDatabase;
-  private MovieDetailsDao movieDetailsDao;
+  @Inject
+  public MovieDetailsDao movieDetailsDao;
 
   @Before
-  public void initDatabase() {
-    instrumentationContext = InstrumentationRegistry.getInstrumentation().getContext();
+  public void setUp() {
+    TestComponent testComponent = DaggerTestComponent.builder()
+        .context(InstrumentationRegistry.getInstrumentation().getTargetContext())
+        .testModule(new TestModule())
+        .build();
 
-    appDatabase = Room.inMemoryDatabaseBuilder(instrumentationContext, AppDatabase.class).build();
-    movieDetailsDao = appDatabase.getMovieDetailsDao();
+    testComponent.inject(this);
   }
 
   @Test
@@ -57,10 +57,5 @@ public class MovieDetailsDaoTest {
             movieDetailsDao.getMovie(movieID).removeObserver(this);
           }
         });
-  }
-
-  @After
-  public void closeDatabase() {
-    appDatabase.close();
   }
 }

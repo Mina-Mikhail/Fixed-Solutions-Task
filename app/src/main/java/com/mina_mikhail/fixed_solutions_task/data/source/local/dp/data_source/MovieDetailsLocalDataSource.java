@@ -2,29 +2,33 @@ package com.mina_mikhail.fixed_solutions_task.data.source.local.dp.data_source;
 
 import androidx.lifecycle.Observer;
 import com.mina_mikhail.fixed_solutions_task.R;
-import com.mina_mikhail.fixed_solutions_task.app.MyApplication;
 import com.mina_mikhail.fixed_solutions_task.data.model.api.MovieDetails;
 import com.mina_mikhail.fixed_solutions_task.data.model.other.RemoteDataSource;
-import com.mina_mikhail.fixed_solutions_task.data.source.local.dp.AppDatabase;
 import com.mina_mikhail.fixed_solutions_task.data.source.local.dp.dao.MovieDetailsDao;
+import com.mina_mikhail.fixed_solutions_task.utils.ResourceProvider;
 import com.uber.autodispose.ScopeProvider;
 import io.reactivex.Completable;
 import io.reactivex.CompletableObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import javax.inject.Inject;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 public class MovieDetailsLocalDataSource {
 
-  private final MovieDetailsDao movieDetailsDao;
+  private MovieDetailsDao movieDetailsDao;
+  private ResourceProvider resourceProvider;
   private RemoteDataSource<MovieDetails> data;
   private Observer<MovieDetails> localMovieDetailsObserver;
 
-  public MovieDetailsLocalDataSource() {
-    AppDatabase appDatabase = AppDatabase.getInstance(MyApplication.getInstance());
-    movieDetailsDao = appDatabase.getMovieDetailsDao();
+  @Inject
+  public MovieDetailsLocalDataSource(MovieDetailsDao movieDetailsDao
+      , ResourceProvider resourceProvider) {
+    this.movieDetailsDao = movieDetailsDao;
+    this.resourceProvider = resourceProvider;
+
     data = new RemoteDataSource<>();
   }
 
@@ -32,7 +36,7 @@ public class MovieDetailsLocalDataSource {
     localMovieDetailsObserver = movie -> {
       if (movie != null && movie.getId() != 0) {
         data.setIsLoadedFromLocal(movie,
-            MyApplication.getInstance().getString(R.string.success_local_load_details));
+            resourceProvider.getString(R.string.success_local_load_details));
       } else {
         data.setFailed("");
       }

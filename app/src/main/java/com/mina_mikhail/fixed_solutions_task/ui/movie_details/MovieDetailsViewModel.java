@@ -1,7 +1,6 @@
 package com.mina_mikhail.fixed_solutions_task.ui.movie_details;
 
 import androidx.lifecycle.LiveData;
-import com.mina_mikhail.fixed_solutions_task.app.MyApplication;
 import com.mina_mikhail.fixed_solutions_task.data.model.api.MovieDetails;
 import com.mina_mikhail.fixed_solutions_task.data.model.other.RemoteDataSource;
 import com.mina_mikhail.fixed_solutions_task.data.repo.MovieDetailsRepository;
@@ -14,8 +13,7 @@ import javax.inject.Inject;
 public class MovieDetailsViewModel
     extends BaseViewModel {
 
-  @Inject
-  MovieDetailsRepository repository;
+  private MovieDetailsRepository repository;
 
   private RemoteDataSource<MovieDetails> movie;
   private int movieID;
@@ -23,8 +21,9 @@ public class MovieDetailsViewModel
   private SingleLiveEvent<List<String>> onPosterClicked;
   private SingleLiveEvent<List<String>> onBackdropClicked;
 
-  public MovieDetailsViewModel() {
-    MyApplication.getInstance().getAppComponent().inject(this);
+  @Inject
+  public MovieDetailsViewModel(MovieDetailsRepository repository) {
+    this.repository = repository;
 
     movie = new RemoteDataSource<>();
 

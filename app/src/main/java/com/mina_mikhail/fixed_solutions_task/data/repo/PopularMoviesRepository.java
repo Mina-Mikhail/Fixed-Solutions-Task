@@ -6,7 +6,6 @@ import androidx.lifecycle.Transformations;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 import com.mina_mikhail.fixed_solutions_task.R;
-import com.mina_mikhail.fixed_solutions_task.app.MyApplication;
 import com.mina_mikhail.fixed_solutions_task.data.model.api.Movie;
 import com.mina_mikhail.fixed_solutions_task.data.model.other.RemoteDataSource;
 import com.mina_mikhail.fixed_solutions_task.data.source.local.dp.data_source.PopularMoviesLocalDataSource;
@@ -14,8 +13,12 @@ import com.mina_mikhail.fixed_solutions_task.data.source.remote.data_source.Popu
 import com.mina_mikhail.fixed_solutions_task.data.source.remote.data_source.PopularMoviesRemoteDataSourceFactory;
 import com.mina_mikhail.fixed_solutions_task.utils.NetworkStatus;
 import com.mina_mikhail.fixed_solutions_task.utils.NetworkUtils;
+import com.mina_mikhail.fixed_solutions_task.utils.ResourceProvider;
+import javax.inject.Inject;
 
 public class PopularMoviesRepository {
+
+  private ResourceProvider resourceProvider;
 
   private PopularMoviesLocalDataSource localDataSource;
   private PopularMoviesRemoteDataSourceFactory moviesDataSourceFactory;
@@ -24,13 +27,19 @@ public class PopularMoviesRepository {
   private final RemoteDataSource<LiveData<PagedList<Movie>>> data;
   private LiveData<NetworkStatus> networkStatusLiveData;
   private Observer<NetworkStatus> networkStatusObserver;
+  private NetworkUtils networkUtils;
 
-  public PopularMoviesRepository(PopularMoviesLocalDataSource localDataSource
+  @Inject
+  public PopularMoviesRepository(ResourceProvider resourceProvider,
+      PopularMoviesLocalDataSource localDataSource
       , PopularMoviesRemoteDataSourceFactory moviesDataSourceFactory
-      , PagedList.Config config) {
+      , PagedList.Config config
+      , NetworkUtils networkUtils) {
+    this.resourceProvider = resourceProvider;
     this.localDataSource = localDataSource;
     this.moviesDataSourceFactory = moviesDataSourceFactory;
     this.config = config;
+    this.networkUtils = networkUtils;
 
     data = new RemoteDataSource<>();
 
@@ -46,7 +55,7 @@ public class PopularMoviesRepository {
   }
 
   public RemoteDataSource<LiveData<PagedList<Movie>>> getPopularMovies() {
-    if (NetworkUtils.isNetworkConnected(MyApplication.getInstance())) {
+    if (networkUtils.isNetworkConnected()) {
       moviesDataSourceFactory.getItemLiveDataSource();
 
       data.setIsLoadedFromRemote(
@@ -57,7 +66,7 @@ public class PopularMoviesRepository {
     } else {
       data.setIsLoadedFromLocal(
           (new LivePagedListBuilder(localDataSource.getMovies(), config)).build(),
-          MyApplication.getInstance().getString(R.string.success_local_load_details));
+          resourceProvider.getString(R.string.success_local_load_details));
 
       return data;
     }

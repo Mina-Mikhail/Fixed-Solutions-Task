@@ -12,14 +12,20 @@ import androidx.annotation.StringRes;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import com.mina_mikhail.fixed_solutions_task.utils.DisplayLoader;
 import com.mina_mikhail.fixed_solutions_task.utils.display_message.DisplayMessage;
 import com.mina_mikhail.fixed_solutions_task.utils.display_message.MessageType;
+import dagger.android.support.AndroidSupportInjection;
+import javax.inject.Inject;
 
 public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseViewModel>
     extends Fragment {
+
+  @Inject
+  public ViewModelProvider.Factory factory;
 
   private BaseActivity mActivity;
   private View mRootView;
@@ -39,6 +45,8 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
+    injectDagger();
     mViewModel = getViewModel();
   }
 
@@ -46,12 +54,7 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
 
-    if (mRootView == null) {
-      mViewDataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
-      mRootView = mViewDataBinding.getRoot();
-      mViewDataBinding.setLifecycleOwner(this);
-      setHasOptionsMenu(hasOptionMenu());
-    }
+    performDataBinding(inflater, container);
 
     return mRootView;
   }
@@ -78,6 +81,19 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
 
   protected T getViewDataBinding() {
     return mViewDataBinding;
+  }
+
+  private void injectDagger() {
+    AndroidSupportInjection.inject(this);
+  }
+
+  private void performDataBinding(LayoutInflater inflater, ViewGroup container) {
+    if (mRootView == null) {
+      mViewDataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
+      mRootView = mViewDataBinding.getRoot();
+      mViewDataBinding.setLifecycleOwner(this);
+      setHasOptionsMenu(hasOptionMenu());
+    }
   }
 
   protected void hideKeyboard() {

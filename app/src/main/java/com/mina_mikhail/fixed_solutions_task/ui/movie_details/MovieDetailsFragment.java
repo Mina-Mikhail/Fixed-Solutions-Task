@@ -43,7 +43,7 @@ public class MovieDetailsFragment
 
   @Override
   protected void setUpViewModel() {
-    mViewModel = new ViewModelProvider(this).get(MovieDetailsViewModel.class);
+    mViewModel = new ViewModelProvider(this, factory).get(MovieDetailsViewModel.class);
     getViewDataBinding().setViewModel(getViewModel());
     initBaseObservables();
   }

@@ -1,17 +1,18 @@
 package com.mina_mikhail.fixed_solutions_task.data.source.remote.data_source;
 
 import com.mina_mikhail.fixed_solutions_task.R;
-import com.mina_mikhail.fixed_solutions_task.app.MyApplication;
 import com.mina_mikhail.fixed_solutions_task.data.model.api.MovieDetails;
 import com.mina_mikhail.fixed_solutions_task.data.model.other.RemoteDataSource;
 import com.mina_mikhail.fixed_solutions_task.data.source.local.dp.data_source.MovieDetailsLocalDataSource;
-import com.mina_mikhail.fixed_solutions_task.data.source.remote.ApiClient;
+import com.mina_mikhail.fixed_solutions_task.data.source.remote.ApiInterface;
 import com.mina_mikhail.fixed_solutions_task.utils.NetworkUtils;
+import com.mina_mikhail.fixed_solutions_task.utils.ResourceProvider;
 import com.uber.autodispose.ScopeProvider;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
+import javax.inject.Inject;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -20,14 +21,28 @@ public class MovieDetailsRemoteDataSource {
   private CompositeDisposable disposable;
   private RemoteDataSource<MovieDetails> data;
 
-  public MovieDetailsRemoteDataSource() {
+  private ApiInterface apiInterface;
+  private MovieDetailsLocalDataSource localDataSource;
+  private ResourceProvider resourceProvider;
+  private NetworkUtils networkUtils;
+
+  @Inject
+  public MovieDetailsRemoteDataSource(ApiInterface apiInterface
+      , MovieDetailsLocalDataSource localDataSource
+      , ResourceProvider resourceProvider
+      , NetworkUtils networkUtils) {
+    this.apiInterface = apiInterface;
+    this.localDataSource = localDataSource;
+    this.resourceProvider = resourceProvider;
+    this.networkUtils = networkUtils;
+
     data = new RemoteDataSource<>();
     disposable = new CompositeDisposable();
   }
 
   public RemoteDataSource<MovieDetails> getMovieDetails(int movieID) {
     data.setIsLoading();
-    disposable.add(ApiClient.getInstance().getApiService().getMovieDetails(movieID)
+    disposable.add(apiInterface.getMovieDetails(movieID)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .as(autoDisposable(ScopeProvider.UNBOUND))
@@ -42,7 +57,7 @@ public class MovieDetailsRemoteDataSource {
                 saveMovieToLocal(moviesDetails);
 
                 data.setIsLoadedFromRemote(moviesDetails,
-                    MyApplication.getInstance().getString(R.string.success_remote_load_details));
+                    resourceProvider.getString(R.string.success_remote_load_details));
               }
 
               dispose();
@@ -52,7 +67,7 @@ public class MovieDetailsRemoteDataSource {
           @Override
           public void onError(Throwable e) {
             if (!disposable.isDisposed()) {
-              if (!NetworkUtils.isNetworkConnected(MyApplication.getInstance())) {
+              if (!networkUtils.isNetworkConnected()) {
                 data.setNoInternet();
               } else {
                 data.setFailed(e.getMessage());
@@ -67,7 +82,6 @@ public class MovieDetailsRemoteDataSource {
   }
 
   private void saveMovieToLocal(MovieDetails remoteMovieDetails) {
-    MovieDetailsLocalDataSource localDataSource = new MovieDetailsLocalDataSource();
     localDataSource.insertMovie(remoteMovieDetails);
   }
 }

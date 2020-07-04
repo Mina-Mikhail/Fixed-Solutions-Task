@@ -14,6 +14,7 @@ import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+import androidx.lifecycle.ViewModelProvider;
 import com.irozon.sneaker.Sneaker;
 import com.mina_mikhail.fixed_solutions_task.R;
 import com.mina_mikhail.fixed_solutions_task.utils.CommonUtils;
@@ -22,9 +23,17 @@ import com.mina_mikhail.fixed_solutions_task.utils.KeyboardUtils;
 import com.mina_mikhail.fixed_solutions_task.utils.NetworkUtils;
 import com.mina_mikhail.fixed_solutions_task.utils.display_message.DisplayMessage;
 import com.mina_mikhail.fixed_solutions_task.utils.display_message.MessageType;
+import dagger.android.AndroidInjection;
+import javax.inject.Inject;
 
 public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseViewModel>
     extends AppCompatActivity {
+
+  @Inject
+  public ViewModelProvider.Factory factory;
+
+  @Inject
+  public NetworkUtils networkUtils;
 
   private ProgressDialog mProgressDialog;
   private T mViewDataBinding;
@@ -34,6 +43,7 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
+    injectDagger();
     performDataBinding();
     setUpViewModel();
     setUpViews();
@@ -49,7 +59,11 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
   }
 
   public boolean isNetworkConnected() {
-    return NetworkUtils.isNetworkConnected(getApplicationContext());
+    return networkUtils.isNetworkConnected();
+  }
+
+  private void injectDagger() {
+    AndroidInjection.inject(this);
   }
 
   private void performDataBinding() {
@@ -63,7 +77,7 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
   }
 
   public void onApiFail() {
-    if (NetworkUtils.isNetworkConnected(getApplicationContext())) {
+    if (isNetworkConnected()) {
       showMessage(getResources().getString(R.string.try_again));
     } else {
       onNoInternet();

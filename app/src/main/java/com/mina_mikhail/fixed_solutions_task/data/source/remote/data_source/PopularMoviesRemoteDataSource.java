@@ -3,11 +3,10 @@ package com.mina_mikhail.fixed_solutions_task.data.source.remote.data_source;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.PageKeyedDataSource;
-import com.mina_mikhail.fixed_solutions_task.app.MyApplication;
 import com.mina_mikhail.fixed_solutions_task.data.enums.NetworkState;
 import com.mina_mikhail.fixed_solutions_task.data.model.api.Movie;
 import com.mina_mikhail.fixed_solutions_task.data.source.local.dp.data_source.PopularMoviesLocalDataSource;
-import com.mina_mikhail.fixed_solutions_task.data.source.remote.ApiClient;
+import com.mina_mikhail.fixed_solutions_task.data.source.remote.ApiInterface;
 import com.mina_mikhail.fixed_solutions_task.data.source.remote.response.PopularMoviesResponse;
 import com.mina_mikhail.fixed_solutions_task.utils.Constants;
 import com.mina_mikhail.fixed_solutions_task.utils.NetworkStatus;
@@ -18,6 +17,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import java.util.List;
+import javax.inject.Inject;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -26,8 +26,17 @@ public class PopularMoviesRemoteDataSource
 
   private MutableLiveData<NetworkStatus> networkState;
   private CompositeDisposable disposable;
+  private ApiInterface apiInterface;
+  private PopularMoviesLocalDataSource localDataSource;
+  private NetworkUtils networkUtils;
 
-  public PopularMoviesRemoteDataSource() {
+  @Inject
+  public PopularMoviesRemoteDataSource(ApiInterface apiInterface
+      , PopularMoviesLocalDataSource localDataSource
+      , NetworkUtils networkUtils) {
+    this.networkUtils = networkUtils;
+    this.apiInterface = apiInterface;
+    this.localDataSource = localDataSource;
     networkState = new MutableLiveData<>();
     disposable = new CompositeDisposable();
   }
@@ -35,7 +44,7 @@ public class PopularMoviesRemoteDataSource
   @Override
   public void loadInitial(@NonNull LoadInitialParams<Long> params
       , @NonNull final LoadInitialCallback<Long, Movie> callback) {
-    disposable.add(ApiClient.getInstance().getApiService().getMovies(Constants.SORT_BY, 1)
+    disposable.add(apiInterface.getMovies(Constants.SORT_BY, 1)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .as(autoDisposable(ScopeProvider.UNBOUND))
@@ -63,7 +72,7 @@ public class PopularMoviesRemoteDataSource
           @Override
           public void onError(Throwable e) {
             if (!disposable.isDisposed()) {
-              if (!NetworkUtils.isNetworkConnected(MyApplication.getInstance())) {
+              if (!networkUtils.isNetworkConnected()) {
                 networkState.postValue(new NetworkStatus(NetworkState.NO_INTERNET, ""));
               } else {
                 networkState.postValue(new NetworkStatus(NetworkState.FAILED, e.getMessage()));
@@ -85,7 +94,7 @@ public class PopularMoviesRemoteDataSource
   public void loadAfter(@NonNull final LoadParams<Long> params
       , @NonNull final LoadCallback<Long, Movie> callback) {
     networkState.postValue(new NetworkStatus(NetworkState.LOADING, ""));
-    disposable.add(ApiClient.getInstance().getApiService().getMovies(Constants.SORT_BY, params.key)
+    disposable.add(apiInterface.getMovies(Constants.SORT_BY, params.key)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .as(autoDisposable(ScopeProvider.UNBOUND))
@@ -116,7 +125,7 @@ public class PopularMoviesRemoteDataSource
           @Override
           public void onError(Throwable e) {
             if (!disposable.isDisposed()) {
-              if (!NetworkUtils.isNetworkConnected(MyApplication.getInstance())) {
+              if (!networkUtils.isNetworkConnected()) {
                 networkState.postValue(new NetworkStatus(NetworkState.NO_INTERNET, ""));
               } else {
                 networkState.postValue(new NetworkStatus(NetworkState.FAILED, e.getMessage()));
@@ -129,7 +138,6 @@ public class PopularMoviesRemoteDataSource
   }
 
   private void saveMoviesToLocal(List<Movie> remoteMoviesList, boolean clearOldData) {
-    PopularMoviesLocalDataSource localDataSource = new PopularMoviesLocalDataSource();
     if (clearOldData) {
       localDataSource.clearMovies(() -> localDataSource.insertMovies(remoteMoviesList));
     } else {

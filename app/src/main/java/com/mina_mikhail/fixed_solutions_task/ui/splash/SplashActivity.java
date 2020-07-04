@@ -29,7 +29,7 @@ public class SplashActivity
   @Override
   protected void setUpViewModel() {
     mViewModel = new SplashViewModel();
-    mViewModel = new ViewModelProvider(this).get(SplashViewModel.class);
+    mViewModel = new ViewModelProvider(this, factory).get(SplashViewModel.class);
     getViewDataBinding().setViewModel(getViewModel());
     initBaseObservables();
   }

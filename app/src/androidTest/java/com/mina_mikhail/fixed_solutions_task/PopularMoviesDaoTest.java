@@ -1,21 +1,21 @@
 package com.mina_mikhail.fixed_solutions_task;
 
-import android.content.Context;
 import androidx.annotation.Nullable;
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
-import androidx.room.Room;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import com.mina_mikhail.fixed_solutions_task.data.model.api.Movie;
-import com.mina_mikhail.fixed_solutions_task.data.source.local.dp.AppDatabase;
 import com.mina_mikhail.fixed_solutions_task.data.source.local.dp.dao.PopularMoviesDao;
+import com.mina_mikhail.fixed_solutions_task.di.component.DaggerTestComponent;
+import com.mina_mikhail.fixed_solutions_task.di.component.TestComponent;
+import com.mina_mikhail.fixed_solutions_task.di.module.TestModule;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.After;
+import javax.inject.Inject;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -29,17 +29,20 @@ public class PopularMoviesDaoTest {
   @Rule
   public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
-  private Context instrumentationContext;
+  @Inject
+  public PopularMoviesDao moviesDao;
 
-  private AppDatabase appDatabase;
-  private PopularMoviesDao moviesDao;
+  @Inject
+  PagedList.Config config;
 
   @Before
-  public void initDatabase() {
-    instrumentationContext = InstrumentationRegistry.getInstrumentation().getContext();
+  public void setUp() {
+    TestComponent testComponent = DaggerTestComponent.builder()
+        .context(InstrumentationRegistry.getInstrumentation().getTargetContext())
+        .testModule(new TestModule())
+        .build();
 
-    appDatabase = Room.inMemoryDatabaseBuilder(instrumentationContext, AppDatabase.class).build();
-    moviesDao = appDatabase.getPopularMoviesDao();
+    testComponent.inject(this);
   }
 
   @Test
@@ -54,7 +57,7 @@ public class PopularMoviesDaoTest {
     moviesDao.insert(movie);
 
     final LiveData<PagedList<Movie>>
-        movies = new LivePagedListBuilder<>(moviesDao.getMovies(), 20).build();
+        movies = new LivePagedListBuilder<>(moviesDao.getMovies(), config).build();
 
     // Assert
     movies.observeForever(new Observer<PagedList<Movie>>() {
@@ -81,7 +84,7 @@ public class PopularMoviesDaoTest {
     moviesDao.clearTable();
 
     final LiveData<PagedList<Movie>>
-        movies = new LivePagedListBuilder<>(moviesDao.getMovies(), 20).build();
+        movies = new LivePagedListBuilder<>(moviesDao.getMovies(), config).build();
 
     // Assert
     movies.observeForever(new Observer<PagedList<Movie>>() {
@@ -91,10 +94,5 @@ public class PopularMoviesDaoTest {
         movies.removeObserver(this);
       }
     });
-  }
-
-  @After
-  public void closeDatabase() {
-    appDatabase.close();
   }
 }
