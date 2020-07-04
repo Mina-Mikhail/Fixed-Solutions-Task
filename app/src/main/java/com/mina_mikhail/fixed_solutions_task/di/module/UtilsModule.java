@@ -11,8 +11,8 @@ import javax.inject.Singleton;
 @Module
 public class UtilsModule {
 
-  public static final int PAGE_SIZE = 20;
-  public static final int PAGE_PRE_FETCH_DISTANCE = 4;
+  private static final int PAGE_SIZE = 20;
+  private static final int PAGE_PRE_FETCH_DISTANCE = 4;
 
   /**
    * @return ResourceProvider which provides resources like strings , etc...

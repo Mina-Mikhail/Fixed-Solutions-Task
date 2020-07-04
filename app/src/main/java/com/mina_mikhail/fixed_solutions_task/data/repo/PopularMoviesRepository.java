@@ -54,8 +54,9 @@ public class PopularMoviesRepository {
     };
   }
 
-  public RemoteDataSource<LiveData<PagedList<Movie>>> getPopularMovies() {
+  public RemoteDataSource<LiveData<PagedList<Movie>>> getPopularMovies(String sortType) {
     if (networkUtils.isNetworkConnected()) {
+      moviesDataSourceFactory.setSortType(sortType);
       moviesDataSourceFactory.getItemLiveDataSource();
 
       data.setIsLoadedFromRemote(

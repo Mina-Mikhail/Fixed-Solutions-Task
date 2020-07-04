@@ -20,8 +20,8 @@ public class PopularMoviesViewModel
     popularMovies = new RemoteDataSource<>();
   }
 
-  void getPopularMovies() {
-    popularMovies = moviesRepository.getPopularMovies();
+  void getPopularMovies(String sortType) {
+    popularMovies = moviesRepository.getPopularMovies(sortType);
   }
 
   RemoteDataSource<LiveData<PagedList<Movie>>> getPopularMoviesData() {

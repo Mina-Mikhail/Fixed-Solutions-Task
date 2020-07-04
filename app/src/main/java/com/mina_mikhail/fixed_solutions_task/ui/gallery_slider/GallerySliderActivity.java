@@ -10,7 +10,6 @@ import com.mina_mikhail.fixed_solutions_task.R;
 import com.mina_mikhail.fixed_solutions_task.data.model.other.ThumbnailImages;
 import com.mina_mikhail.fixed_solutions_task.databinding.ActivityGallerySliderBinding;
 import com.mina_mikhail.fixed_solutions_task.ui.base.BaseActivity;
-import com.mina_mikhail.fixed_solutions_task.utils.Constants;
 import java.util.ArrayList;
 import java.util.List;
 import org.parceler.Parcels;
@@ -18,12 +17,15 @@ import org.parceler.Parcels;
 public class GallerySliderActivity
     extends BaseActivity<ActivityGallerySliderBinding, GallerySliderViewModel> {
 
+  public static final String KEY_IMAGES_LIST = "imagesList";
+  public static final String KEY_CLICKED_POSITION = "clickedPosition";
+
   public static void open(Context context, List<String> imagesList, int clickedPosition) {
     Bundle bundle = new Bundle();
-    bundle.putParcelable(Constants.KEY_IMAGES_LIST, Parcels.wrap(imagesList));
+    bundle.putParcelable(KEY_IMAGES_LIST, Parcels.wrap(imagesList));
     Intent intent = new Intent(context, GallerySliderActivity.class);
-    intent.putExtra(Constants.KEY_IMAGES_LIST, bundle);
-    intent.putExtra(Constants.KEY_CLICKED_POSITION, clickedPosition);
+    intent.putExtra(KEY_IMAGES_LIST, bundle);
+    intent.putExtra(KEY_CLICKED_POSITION, clickedPosition);
     context.startActivity(intent);
   }
 
@@ -78,12 +80,12 @@ public class GallerySliderActivity
   }
 
   private void getIntentData() {
-    Bundle bundle = this.getIntent().getBundleExtra(Constants.KEY_IMAGES_LIST);
+    Bundle bundle = this.getIntent().getBundleExtra(KEY_IMAGES_LIST);
     if (bundle != null) {
-      sliderImages = Parcels.unwrap(bundle.getParcelable(Constants.KEY_IMAGES_LIST));
+      sliderImages = Parcels.unwrap(bundle.getParcelable(KEY_IMAGES_LIST));
     }
 
-    clickedPosition = getIntent().getIntExtra(Constants.KEY_CLICKED_POSITION, 0);
+    clickedPosition = getIntent().getIntExtra(KEY_CLICKED_POSITION, 0);
   }
 
   private void initRestaurantGallery() {

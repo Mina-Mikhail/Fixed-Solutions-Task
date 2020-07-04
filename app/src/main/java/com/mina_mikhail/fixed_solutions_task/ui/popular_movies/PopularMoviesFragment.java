@@ -16,6 +16,8 @@ public class PopularMoviesFragment
     extends BaseFragment<FragmentPopularMoviesBinding, PopularMoviesViewModel>
     implements PopularMoviesAdapter.MoviesListener {
 
+  private static final String SORT_BY = "primary_release_date.desc";
+
   private PopularMoviesViewModel mViewModel;
 
   private PopularMoviesAdapter moviesAdapter;
@@ -100,7 +102,7 @@ public class PopularMoviesFragment
 
   private void getData() {
     showProgress();
-    getViewModel().getPopularMovies();
+    getViewModel().getPopularMovies(SORT_BY);
   }
 
   @Override

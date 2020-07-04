@@ -173,7 +173,7 @@ public class MovieDetails {
 
   public String getReleaseDateCasted() {
     return DateTimeUtils
-        .changeFormat(release_date, Constants.API_DATE_FORMAT, Constants.UI_DATE_FORMAT);
+        .changeFormat(release_date, DateTimeUtils.API_DATE_FORMAT, DateTimeUtils.UI_DATE_FORMAT);
   }
 
   public void setRelease_date(String release_date) {

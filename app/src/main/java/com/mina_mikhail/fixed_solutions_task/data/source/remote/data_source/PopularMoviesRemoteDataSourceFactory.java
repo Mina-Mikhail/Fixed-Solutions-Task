@@ -24,6 +24,10 @@ public class PopularMoviesRemoteDataSourceFactory
     return moviesDataSource;
   }
 
+  public void setSortType(String sortType) {
+    moviesDataSource.setSortType(sortType);
+  }
+
   public MutableLiveData<PopularMoviesRemoteDataSource> getItemLiveDataSource() {
     return itemLiveDataSource;
   }

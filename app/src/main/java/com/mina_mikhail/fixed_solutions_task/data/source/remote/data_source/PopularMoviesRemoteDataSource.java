@@ -8,7 +8,6 @@ import com.mina_mikhail.fixed_solutions_task.data.model.api.Movie;
 import com.mina_mikhail.fixed_solutions_task.data.source.local.dp.data_source.PopularMoviesLocalDataSource;
 import com.mina_mikhail.fixed_solutions_task.data.source.remote.ApiInterface;
 import com.mina_mikhail.fixed_solutions_task.data.source.remote.response.PopularMoviesResponse;
-import com.mina_mikhail.fixed_solutions_task.utils.Constants;
 import com.mina_mikhail.fixed_solutions_task.utils.NetworkStatus;
 import com.mina_mikhail.fixed_solutions_task.utils.NetworkUtils;
 import com.uber.autodispose.ScopeProvider;
@@ -30,6 +29,9 @@ public class PopularMoviesRemoteDataSource
   private PopularMoviesLocalDataSource localDataSource;
   private NetworkUtils networkUtils;
 
+  private String sortType;
+  private int firstPage = 1;
+
   @Inject
   public PopularMoviesRemoteDataSource(ApiInterface apiInterface
       , PopularMoviesLocalDataSource localDataSource
@@ -41,10 +43,14 @@ public class PopularMoviesRemoteDataSource
     disposable = new CompositeDisposable();
   }
 
+  void setSortType(String sortType) {
+    this.sortType = sortType;
+  }
+
   @Override
   public void loadInitial(@NonNull LoadInitialParams<Long> params
       , @NonNull final LoadInitialCallback<Long, Movie> callback) {
-    disposable.add(apiInterface.getMovies(Constants.SORT_BY, 1)
+    disposable.add(apiInterface.getMovies(sortType, firstPage)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .as(autoDisposable(ScopeProvider.UNBOUND))
@@ -94,7 +100,7 @@ public class PopularMoviesRemoteDataSource
   public void loadAfter(@NonNull final LoadParams<Long> params
       , @NonNull final LoadCallback<Long, Movie> callback) {
     networkState.postValue(new NetworkStatus(NetworkState.LOADING, ""));
-    disposable.add(apiInterface.getMovies(Constants.SORT_BY, params.key)
+    disposable.add(apiInterface.getMovies(sortType, params.key)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .as(autoDisposable(ScopeProvider.UNBOUND))

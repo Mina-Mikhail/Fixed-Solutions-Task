@@ -16,6 +16,9 @@ import java.util.Locale;
 
 public final class DateTimeUtils {
 
+  public static final String API_DATE_FORMAT = "yyyy-MM-dd";
+  public static final String UI_DATE_FORMAT = "EEE, dd MMM yyyy";
+
   public static String changeFormat(String input, String oldFormat, String newFormat) {
     if (input != null) {
       SimpleDateFormat formatView = new SimpleDateFormat(oldFormat, getLocale());
