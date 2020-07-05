@@ -120,6 +120,7 @@ dependencies {
   androidTestImplementation "androidx.arch.core:core-testing:$core_testing"
   androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:$dagger"
   testAnnotationProcessor "com.google.dagger:dagger-compiler:$dagger"
+  testImplementation "org.mockito:mockito-core:$mockitoVersion"
 }
 
 // Logger out test results to console

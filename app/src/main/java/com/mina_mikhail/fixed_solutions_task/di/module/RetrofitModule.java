@@ -31,7 +31,7 @@ public class RetrofitModule {
   /**
    * @return builder call for retrofit  with return of retofit instance
    */
-  Retrofit getRetrofit(OkHttpClient okHttpClient) {
+  private Retrofit getRetrofit(OkHttpClient okHttpClient) {
     return new Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())

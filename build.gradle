@@ -62,6 +62,7 @@ buildscript {
     junit_ext = '1.1.1'
     espresso = '3.2.0'
     core_testing = '2.1.0'
+    mockitoVersion = '2.8.9'
   }
   repositories {
     google()
